@@ -4,11 +4,20 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { BusinessListing } from "@/types/marketplace";
-import { formatINR, formatDate } from "@/lib/utils";
+import { formatINR } from "@/lib/utils";
 import { MarketplaceStorage } from "@/lib/storage";
 import { useToast } from "@/components/Toast";
 import { CategoryPlaceholder } from "./CategoryPlaceholder";
-import { MarketplaceIcon } from "@/components/icons";
+import {
+  ShieldCheck,
+  Lock,
+  Bookmark,
+  ArrowRight,
+  MapPin,
+  CheckCircle2,
+  Clock,
+  TrendingUp,
+} from "lucide-react";
 
 interface ListingCardProps {
   listing: BusinessListing;
@@ -30,7 +39,7 @@ export function ListingCard({ listing }: ListingCardProps) {
     const result = MarketplaceStorage.toggleSaveListing(listing.id);
     setIsSaved(result);
     showToast(
-      result ? "Mandate Added to Shortlist" : "Removed from Shortlist",
+      result ? "Saved to Shortlist" : "Removed from Shortlist",
       listing.displayTitle,
       result ? "success" : "info"
     );
@@ -42,59 +51,12 @@ export function ListingCard({ listing }: ListingCardProps) {
       : "0";
 
   const targetSlug = listing.slug || listing.id;
-  const refCode = `VS-${(listing.state || "IN").slice(0, 2).toUpperCase()}-${listing.id.replace(/[^a-zA-Z0-9]/g, "").slice(-4).toUpperCase()}`;
 
   return (
-    <div className="group bg-white border border-ivory-400 hover:border-[#0c152b] transition-all duration-200 flex flex-col justify-between overflow-hidden shadow-xs hover:shadow-md">
+    <div className="group bg-white rounded-2xl border border-slate-200/90 hover:border-blue-500/50 hover:shadow-card-hover transition-all duration-200 flex flex-col justify-between overflow-hidden">
       <div>
-        {/* 1. TOP DOCUMENT HEADER / REGISTRY STAMP */}
-        <div className="bg-ivory-100 px-4 py-2 border-b border-ivory-300 flex items-center justify-between text-[10px] font-mono">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-[#0c152b] tracking-wider uppercase">
-              MANDATE #{refCode}
-            </span>
-            <span className="text-slate-400">|</span>
-            <span className="text-slate-600 uppercase truncate max-w-[130px] sm:max-w-[180px]">
-              {listing.city}, {listing.state}
-            </span>
-          </div>
-
-          <div className="flex items-center gap-1.5">
-            {listing.visibility === "strictly_confidential" ? (
-              <span className="inline-flex items-center gap-1 font-semibold text-bronze-700 bg-bronze-50 px-1.5 py-0.5 border border-bronze-300">
-                <MarketplaceIcon name="lock" size="xs" />
-                STRICTLY BLIND
-              </span>
-            ) : listing.visibility === "partially_confidential" ? (
-              <span className="inline-flex items-center gap-1 font-semibold text-slate-700 bg-ivory-200 px-1.5 py-0.5 border border-slate-300">
-                <MarketplaceIcon name="lock" size="xs" />
-                PARTIAL BLIND
-              </span>
-            ) : (
-              <span className="font-medium text-teal-800 bg-teal-50 px-1.5 py-0.5 border border-teal-200">
-                PUBLIC RECORD
-              </span>
-            )}
-
-            {/* Bookmark button */}
-            <button
-              onClick={toggleBookmark}
-              type="button"
-              className={`p-1.5 border transition-all duration-150 rounded-[2px] shadow-2xs ${
-                isSaved
-                  ? "bg-teal-800 text-white border-teal-700 shadow-inner"
-                  : "bg-white text-slate-500 hover:text-navy-950 border-[#d6d2c4] hover:border-navy-950/40 hover:bg-[#fbfbf9]"
-              }`}
-              title={isSaved ? "Remove from portfolio shortlist" : "Save this mandate"}
-              aria-label={isSaved ? "Remove from shortlist" : "Save to shortlist"}
-            >
-              <MarketplaceIcon name="bookmark" size="xs" className={isSaved ? "fill-current" : ""} />
-            </button>
-          </div>
-        </div>
-
-        {/* 2. MEDIA / BLUEPRINT FRAME */}
-        <div className="relative h-44 w-full bg-[#0c152b] overflow-hidden border-b border-ivory-300">
+        {/* Cover Photo / Header */}
+        <div className="relative h-48 w-full bg-slate-900 overflow-hidden">
           <CategoryPlaceholder
             industry={listing.industry}
             subCategory={listing.subCategory}
@@ -107,78 +69,124 @@ export function ListingCard({ listing }: ListingCardProps) {
               alt={listing.displayTitle}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-cover opacity-90 group-hover:scale-102 transition-transform duration-300"
+              className="object-cover opacity-90 group-hover:scale-105 transition-transform duration-300"
               onError={() => setImgError(true)}
               unoptimized
             />
           )}
 
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0c152b]/95 via-transparent to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-black/20 pointer-events-none" />
 
-          {/* Overlay Industry Capsule */}
-          <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-white text-[11px] font-mono">
-            <span className="px-1.5 py-0.5 bg-black/60 border border-white/20 text-ivory-200 uppercase tracking-wider text-[10px]">
+          {/* Top Chips Row */}
+          <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
+            <span className="px-2.5 py-1 bg-white/95 backdrop-blur-xs text-slate-800 text-xs font-semibold rounded-full shadow-xs">
               {listing.industry}
             </span>
-            <span className="text-white/80 font-sans text-xs">
-              {listing.yearsInOperation} Yrs Operating
+
+            <div className="flex items-center gap-1.5">
+              {listing.visibility === "strictly_confidential" ? (
+                <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-amber-800 bg-amber-50/95 backdrop-blur-xs px-2.5 py-1 rounded-full border border-amber-200/80 shadow-xs">
+                  <Lock className="w-3 h-3" />
+                  Confidential
+                </span>
+              ) : listing.visibility === "partially_confidential" ? (
+                <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-700 bg-white/95 backdrop-blur-xs px-2.5 py-1 rounded-full shadow-xs">
+                  <Lock className="w-3 h-3" />
+                  Partial Blind
+                </span>
+              ) : (
+                <span className="text-[11px] font-semibold text-emerald-800 bg-emerald-50/95 backdrop-blur-xs px-2.5 py-1 rounded-full border border-emerald-200/80 shadow-xs">
+                  Verified Public
+                </span>
+              )}
+
+              {/* Bookmark Button */}
+              <button
+                onClick={toggleBookmark}
+                type="button"
+                className={`p-1.5 rounded-full transition-all shadow-xs ${
+                  isSaved
+                    ? "bg-blue-600 text-white"
+                    : "bg-white/90 text-slate-600 hover:text-slate-900 hover:bg-white"
+                }`}
+                title={isSaved ? "Remove from shortlist" : "Save this business"}
+                aria-label={isSaved ? "Remove from shortlist" : "Save to shortlist"}
+              >
+                <Bookmark className={`w-3.5 h-3.5 ${isSaved ? "fill-current" : ""}`} />
+              </button>
+            </div>
+          </div>
+
+          {/* Bottom Location & Age */}
+          <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white text-xs">
+            <div className="flex items-center gap-1 font-medium text-slate-200">
+              <MapPin className="w-3.5 h-3.5 text-blue-400" />
+              <span>{listing.city}, {listing.state}</span>
+            </div>
+            <span className="text-slate-300 font-medium">
+              {listing.yearsInOperation} yrs in business
             </span>
           </div>
         </div>
 
-        {/* 3. CORE PROSPECTUS COPY */}
-        <div className="p-4 space-y-3">
+        {/* Content Body */}
+        <div className="p-5 space-y-4">
           <Link href={`/businesses/${targetSlug}`} className="block group/title">
-            <h3 className="font-display font-bold text-sm sm:text-base text-[#0c152b] group-hover/title:text-teal-800 transition line-clamp-1">
+            <h3 className="font-display font-bold text-base sm:text-lg text-slate-900 group-hover/title:text-blue-600 transition line-clamp-1">
               {listing.displayTitle}
             </h3>
-            <p className="font-sans text-xs text-slate-600 mt-1 line-clamp-2 leading-relaxed">
+            <p className="font-sans text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">
               {listing.tagline}
             </p>
           </Link>
 
-          {/* 4. FINANCIAL LEDGER TABLE (Private-Market Financial Publication Style) */}
-          <div className="bg-ivory-100 border border-ivory-300 p-2.5 font-mono text-xs">
-            <div className="grid grid-cols-3 gap-2 pb-2 border-b border-ivory-300 text-[10px] text-slate-500 uppercase tracking-wider">
-              <span>ASKING VALUATION</span>
-              <span>ANNUAL TURNOVER</span>
-              <span className="text-right">ADJ. EBITDA</span>
-            </div>
-            <div className="grid grid-cols-3 gap-2 pt-2 items-baseline">
-              <span className="font-display font-bold text-sm text-[#0c152b]">
+          {/* Financial Metrics Strip */}
+          <div className="grid grid-cols-3 gap-2 p-3 bg-slate-50 rounded-xl border border-slate-100">
+            <div>
+              <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block">
+                Asking Price
+              </span>
+              <span className="font-bold text-sm text-slate-900 mt-0.5 block tabular-nums">
                 {formatINR(listing.askingPrice)}
               </span>
-              <span className="font-mono text-xs text-slate-800">
+            </div>
+            <div>
+              <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block">
+                TTM Revenue
+              </span>
+              <span className="font-semibold text-xs text-slate-700 mt-0.5 block tabular-nums">
                 {formatINR(listing.annualRevenue)}
               </span>
-              <span className="font-mono text-xs text-teal-800 font-semibold text-right">
-                {formatINR(listing.annualEbitda)} <span className="text-[10px] text-slate-500 block font-normal">({ebitdaMargin}%)</span>
+            </div>
+            <div className="text-right">
+              <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block">
+                TTM EBITDA
+              </span>
+              <span className="font-semibold text-xs text-emerald-600 mt-0.5 block tabular-nums">
+                {formatINR(listing.annualEbitda)}
+                <span className="text-[10px] text-slate-400 font-normal ml-0.5">({ebitdaMargin}%)</span>
               </span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* 5. FOOTER VERIFICATION DOSSIER & CALL TO ACTION */}
-      <div className="p-4 pt-0">
-        <div className="pt-2.5 border-t border-ivory-300 flex items-center justify-between text-[11px]">
-          <div className="flex items-center gap-1.5 text-teal-900 font-medium">
-            <MarketplaceIcon name="shield-check" size="sm" className="text-teal-700 flex-shrink-0" />
-            <span className="truncate max-w-[170px]">
-              {listing.isFinancialVerified ? "CA Verified Books (GSTR-9)" : "Management Accounts"}
+      {/* Footer Call to Action */}
+      <div className="p-5 pt-0">
+        <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+          <div className="flex items-center gap-1.5 text-emerald-700 font-medium text-xs">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+            <span className="truncate max-w-[160px]">
+              {listing.isFinancialVerified ? "CA Audited Books" : "Promoter Verified"}
             </span>
           </div>
 
           <Link
             href={`/businesses/${targetSlug}`}
-            className="btn-primary btn-sm group/btn"
+            className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs transition shadow-xs group/btn"
           >
-            <span>Inspect Dossier</span>
-            <MarketplaceIcon
-              name="arrow-up-right"
-              size="xs"
-              className="text-teal-400 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform"
-            />
+            <span>View Details</span>
+            <ArrowRight className="w-3.5 h-3.5 text-slate-300 group-hover/btn:translate-x-0.5 transition-transform" />
           </Link>
         </div>
       </div>

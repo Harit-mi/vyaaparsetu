@@ -22,10 +22,10 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
         />
       </head>
-      <body className="min-h-full flex flex-col font-sans antialiased text-[#0c152b] bg-[#fbfbf9] selection:bg-navy-950 selection:text-white">
+      <body className="min-h-full flex flex-col font-sans antialiased text-slate-900 bg-slate-50 selection:bg-blue-600 selection:text-white">
         <ToastProvider>
           <Navbar />
           <main className="flex-1">{children}</main>

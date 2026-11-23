@@ -64,60 +64,60 @@ export function DealPipelineView({ deal, onUpdate }: DealPipelineViewProps) {
   const daysRemaining = Math.max(0, Math.ceil((attributionEnd - now) / (1000 * 60 * 60 * 24)));
 
   return (
-    <div className="bg-white border border-[#e2dfd6] shadow-xs overflow-hidden">
-      {/* Top Ledger Header */}
-      <div className="p-6 bg-navy-950 text-white flex flex-col lg:flex-row lg:items-center justify-between gap-6 border-b border-navy-800">
+    <div className="bg-white rounded-2xl border border-slate-200/90 shadow-card overflow-hidden">
+      {/* Top Header */}
+      <div className="p-6 bg-slate-900 text-white flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div className="space-y-1.5">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="font-mono text-[10px] uppercase tracking-wider text-teal-400 bg-teal-950/80 border border-teal-800/80 px-2 py-0.5">
-              PROTOCOL REF #{deal.id}
+            <span className="text-xs font-semibold text-blue-300 bg-blue-900/60 border border-blue-700/60 px-2.5 py-0.5 rounded-full">
+              Deal Ref #{deal.id}
             </span>
-            <span className="font-mono text-[10px] uppercase tracking-wider text-amber-300 bg-amber-950/80 border border-amber-800/80 px-2 py-0.5">
-              STAGE {currentIdx + 1} OF 11 ACTIVE
+            <span className="text-xs font-semibold text-amber-300 bg-amber-900/60 border border-amber-700/60 px-2.5 py-0.5 rounded-full">
+              Stage {currentIdx + 1} of 11 Active
             </span>
           </div>
-          <h3 className="font-display text-lg sm:text-xl font-bold text-white tracking-tight">
+          <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
             {deal.listingTitle}
           </h3>
-          <p className="font-mono text-xs text-slate-300">
-            SELLER: <span className="text-white font-semibold">{deal.sellerName}</span> &nbsp;|&nbsp; BUYER:{" "}
+          <p className="text-xs text-slate-300">
+            Seller: <span className="text-white font-semibold">{deal.sellerName}</span> &nbsp;|&nbsp; Buyer:{" "}
             <span className="text-white font-semibold">{deal.buyerName}</span>
           </p>
         </div>
 
-        {/* Attribution & Success Fee Ledger Strip */}
-        <div className="flex flex-wrap items-stretch gap-4 bg-navy-900/90 border border-navy-800 p-3.5 text-xs">
-          <div className="pr-4 border-r border-navy-800">
-            <span className="font-mono text-[10px] text-slate-400 uppercase tracking-wider block">
-              ATTRIBUTION WINDOW
+        {/* Attribution & Success Fee */}
+        <div className="flex flex-wrap items-stretch gap-4 bg-slate-800/90 rounded-xl border border-slate-700/80 p-3.5 text-xs">
+          <div className="pr-4 border-r border-slate-700">
+            <span className="text-[11px] text-slate-400 uppercase tracking-wider block font-semibold">
+              Attribution Window
             </span>
-            <div className="font-mono font-bold text-white flex items-center gap-1.5 mt-1">
+            <div className="font-bold text-white flex items-center gap-1.5 mt-1 text-sm">
               <Clock className="w-3.5 h-3.5 text-amber-400" />
-              <span>{daysRemaining} DAYS REMAINING</span>
+              <span>{daysRemaining} Days Remaining</span>
             </div>
-            <span className="font-mono text-[10px] text-slate-400 block mt-0.5">180-Day Protected Cycle</span>
+            <span className="text-[10px] text-slate-400 block mt-0.5">180-Day Protected Window</span>
           </div>
 
           <div>
-            <span className="font-mono text-[10px] text-slate-400 uppercase tracking-wider block">
-              PLATFORM SUCCESS FEE (2.0%)
+            <span className="text-[11px] text-slate-400 uppercase tracking-wider block font-semibold">
+              Platform Success Fee (2.0%)
             </span>
-            <span className="font-mono text-base font-bold text-teal-400 block mt-0.5 tabular-nums">
+            <span className="text-base font-bold text-emerald-400 block mt-0.5">
               {formatINR(deal.expectedCommission)}
             </span>
-            <span className="font-mono text-[10px] text-slate-400 block">+18% Statutory GST upon closing</span>
+            <span className="text-[10px] text-slate-400 block">+18% GST upon closing</span>
           </div>
         </div>
       </div>
 
       {/* 11-Stage Horizontal Stepper */}
-      <div className="p-6 overflow-x-auto border-b border-[#e2dfd6] bg-[#fbfbf9]">
-        <div className="text-[10px] font-mono uppercase tracking-wider text-slate-500 mb-3">
-          STATUTORY ACQUISITION MILESTONES — CHRONOLOGICAL RECORD
+      <div className="p-6 overflow-x-auto border-b border-slate-200 bg-slate-50/50">
+        <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">
+          Acquisition Milestones & Progress
         </div>
         <div className="flex items-start justify-between min-w-[840px] relative pt-2">
-          {/* Background Connecting Line */}
-          <div className="absolute top-5 left-6 right-6 h-px bg-[#e2dfd6] -z-0" />
+          {/* Background Line */}
+          <div className="absolute top-5 left-6 right-6 h-0.5 bg-slate-200 -z-0" />
 
           {STAGES.map((s, idx) => {
             const isCompleted = idx < currentIdx;
@@ -126,53 +126,53 @@ export function DealPipelineView({ deal, onUpdate }: DealPipelineViewProps) {
             return (
               <div key={s.key} className="flex flex-col items-center relative z-10 w-24 text-center">
                 <div
-                  className={`w-7 h-7 flex items-center justify-center font-mono text-[11px] font-bold transition-all border ${
+                  className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all border ${
                     isCompleted
-                      ? "bg-teal-700 text-white border-teal-700"
+                      ? "bg-emerald-600 text-white border-emerald-600"
                       : isCurrent
-                      ? "bg-navy-950 text-white border-navy-950 ring-2 ring-bronze-500"
+                      ? "bg-blue-600 text-white border-blue-600 ring-4 ring-blue-100"
                       : "bg-white text-slate-400 border-slate-300"
                   }`}
                 >
-                  {isCompleted ? <Check className="w-3.5 h-3.5" /> : s.num}
+                  {isCompleted ? <Check className="w-4 h-4" /> : s.num}
                 </div>
                 <span
-                  className={`text-[10px] font-bold mt-2 uppercase tracking-wide line-clamp-1 ${
-                    isCurrent ? "text-navy-950 font-extrabold" : isCompleted ? "text-teal-900" : "text-slate-400"
+                  className={`text-[11px] font-semibold mt-2 line-clamp-1 ${
+                    isCurrent ? "text-blue-600 font-bold" : isCompleted ? "text-slate-800" : "text-slate-400"
                   }`}
                 >
                   {s.label}
                 </span>
-                <span className="text-[9px] text-slate-500 line-clamp-1 mt-0.5">{s.desc}</span>
+                <span className="text-[10px] text-slate-400 line-clamp-1 mt-0.5">{s.desc}</span>
               </div>
             );
           })}
         </div>
       </div>
 
-      {/* Stage Action & History Ledger */}
+      {/* Stage Action & History */}
       <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6 text-xs bg-white">
         {/* Left: Stage Advancer Controls */}
-        <div className="space-y-4 border-r border-[#e2dfd6] pr-0 md:pr-6">
-          <div className="border-b border-[#e2dfd6] pb-2">
-            <h4 className="font-display font-bold text-navy-950 text-sm flex items-center gap-1.5">
-              <TrendingUp className="w-4 h-4 text-teal-700" />
-              ADVANCE ACQUISITION PROTOCOL
+        <div className="space-y-4 border-r border-slate-200 pr-0 md:pr-6">
+          <div className="border-b border-slate-100 pb-2">
+            <h4 className="font-bold text-slate-900 text-sm flex items-center gap-1.5">
+              <TrendingUp className="w-4 h-4 text-blue-600" />
+              Advance Deal Milestone
             </h4>
-            <p className="text-[11px] text-slate-500 mt-0.5">
-              Update current deal milestone to notify transaction counsel and both counterparties.
+            <p className="text-xs text-slate-500 mt-0.5">
+              Update current deal milestone to notify transaction counsel and counterparties.
             </p>
           </div>
 
           <div className="space-y-3">
             <div>
-              <label className="block font-mono text-[10px] uppercase tracking-wider text-slate-700 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
                 Target Milestone Stage
               </label>
               <select
                 value={selectedStage}
                 onChange={(e) => setSelectedStage(e.target.value as DealStage)}
-                className="w-full p-2.5 border border-[#e2dfd6] bg-[#fbfbf9] text-navy-950 font-mono text-xs focus:ring-1 focus:ring-navy-950 focus:outline-hidden"
+                className="w-full p-2.5 border border-slate-300 rounded-lg bg-white text-slate-900 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-hidden"
               >
                 {STAGES.map((s) => (
                   <option key={s.key} value={s.key}>
@@ -183,51 +183,51 @@ export function DealPipelineView({ deal, onUpdate }: DealPipelineViewProps) {
             </div>
 
             <div>
-              <label className="block font-mono text-[10px] uppercase tracking-wider text-slate-700 mb-1">
-                Substantiating Audit Memo / Note
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
+                Milestone Notes / Memo
               </label>
               <textarea
                 rows={3}
                 value={stageNotes}
                 onChange={(e) => setStageNotes(e.target.value)}
                 placeholder="E.g., Virtual data room folder 4 (tax audits) shared; physical plant visit conducted with promoters."
-                className="w-full p-2.5 border border-[#e2dfd6] bg-[#fbfbf9] text-xs text-navy-950 placeholder:text-slate-400 focus:ring-1 focus:ring-navy-950 focus:outline-hidden font-sans"
+                className="w-full p-2.5 border border-slate-300 rounded-lg text-xs text-slate-900 placeholder:text-slate-400 focus:ring-1 focus:ring-blue-500 focus:outline-hidden"
               />
             </div>
 
             <button
               onClick={handleStageChange}
               disabled={isUpdating}
-              className="btn-primary w-full"
+              className="btn-brand w-full"
             >
-              {isUpdating ? "Recording Protocol Entry..." : "Confirm & Commit Milestone Stage"}
+              {isUpdating ? "Recording Milestone..." : "Confirm & Advance Milestone"}
             </button>
           </div>
         </div>
 
         {/* Right: Milestone Audit Trail */}
         <div className="space-y-3">
-          <div className="border-b border-[#e2dfd6] pb-2">
-            <h4 className="font-display font-bold text-navy-950 text-sm flex items-center gap-1.5">
-              <FileCheck className="w-4 h-4 text-bronze-600" />
-              MILESTONE EVENT LOG & AUDIT TRAIL
+          <div className="border-b border-slate-100 pb-2">
+            <h4 className="font-bold text-slate-900 text-sm flex items-center gap-1.5">
+              <FileCheck className="w-4 h-4 text-indigo-600" />
+              Milestone Audit Trail
             </h4>
-            <p className="text-[11px] text-slate-500 mt-0.5">
-              Time-stamped audit records maintained for legal deal attribution.
+            <p className="text-xs text-slate-500 mt-0.5">
+              Time-stamped audit records maintained for deal attribution.
             </p>
           </div>
 
-          <div className="divide-y divide-[#e2dfd6] max-h-64 overflow-y-auto pr-1">
+          <div className="divide-y divide-slate-100 max-h-64 overflow-y-auto pr-1">
             {(deal.stageHistory || []).map((h, i) => (
               <div key={i} className="py-2.5 space-y-1">
-                <div className="flex items-center justify-between text-[11px]">
-                  <span className="font-mono font-bold text-navy-950 uppercase">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-semibold text-slate-900 capitalize">
                     {h.stage.replace(/_/g, " ")}
                   </span>
-                  <span className="font-mono text-[10px] text-slate-400">{formatDate(h.timestamp)}</span>
+                  <span className="text-[11px] text-slate-400">{formatDate(h.timestamp)}</span>
                 </div>
-                {h.notes && <p className="text-slate-600 text-xs font-serif italic">{h.notes}</p>}
-                <div className="text-[10px] font-mono text-slate-400">Recorded by: {h.updatedBy}</div>
+                {h.notes && <p className="text-slate-600 text-xs leading-relaxed">{h.notes}</p>}
+                <div className="text-[10px] text-slate-400">Recorded by: {h.updatedBy}</div>
               </div>
             ))}
           </div>

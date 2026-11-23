@@ -45,12 +45,12 @@ export function ReportListingModal({ listing, isOpen, onClose }: ReportListingMo
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="relative w-full max-w-md bg-white rounded-[2px] shadow-2xl border border-slate-200 overflow-hidden flex flex-col">
+      <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col">
         {/* Header */}
-        <div className="px-5 py-4 bg-red-950 text-white flex items-center justify-between">
+        <div className="px-5 py-4 bg-slate-900 text-white flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5 text-red-400" />
-            <h3 className="font-bold text-sm">Report Listing to Compliance Officer</h3>
+            <AlertTriangle className="w-5 h-5 text-amber-400" />
+            <h3 className="font-bold text-sm">Report Listing to Compliance</h3>
           </div>
           <button onClick={onClose} className="p-1 text-slate-400 hover:text-white rounded">
             <X className="w-4 h-4" />

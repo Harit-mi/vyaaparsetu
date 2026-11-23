@@ -284,71 +284,72 @@ export default function SellerNewListingWizard() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 font-sans">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-ivory-400 pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-5">
         <div>
-          <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-teal-800 bg-teal-50 px-2 py-0.5 border border-teal-200">
-            STATUTORY FILING DOSSIER • M&A LISTING MANDATE
+          <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-700 bg-blue-50 px-3 py-1 rounded-full border border-blue-200/70">
+            <ShieldCheck className="w-3.5 h-3.5" />
+            M&A Listing Mandate • Step {step} of 6
           </span>
-          <h1 className="font-display text-2xl sm:text-3xl font-extrabold text-[#0c152b] mt-1">
-            File Corporate Divestment Mandate
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-2">
+            List Your Business For Sale
           </h1>
-          <p className="font-mono text-xs text-slate-500 mt-0.5">
-            STAGE 0{step} OF 06 • CONFIDENTIALITY PROTOCOLS & AUTOSAVE ACTIVE
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+            Confidentiality protocols & autosave active. Your identity remains strictly protected.
           </p>
         </div>
 
-        <div className="flex items-center gap-2 font-mono text-xs">
+        <div className="flex items-center gap-2.5">
           <button
             type="button"
             onClick={handleSaveDraft}
-            className="inline-flex items-center gap-1.5 px-3 py-2 border border-ivory-400 bg-white hover:bg-ivory-100 text-slate-800 transition"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-semibold shadow-xs transition"
           >
             <Save className="w-3.5 h-3.5 text-slate-500" />
-            <span className="uppercase tracking-wider">Save Draft</span>
+            <span>Save Draft</span>
           </button>
 
           <button
             type="button"
             onClick={() => setShowPreview(!showPreview)}
-            className="inline-flex items-center gap-1.5 px-3 py-2 bg-[#0c152b] text-white hover:bg-navy-800 transition font-bold"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold shadow-xs transition"
           >
-            <Eye className="w-3.5 h-3.5 text-bronze-300" />
-            <span className="uppercase tracking-wider">{showPreview ? "Back to Form" : "Live Teaser"}</span>
+            <Eye className="w-3.5 h-3.5 text-slate-300" />
+            <span>{showPreview ? "Back to Form" : "Live Teaser"}</span>
           </button>
         </div>
       </div>
 
       {/* Stepper Progress Bar */}
-      <div className="bg-white p-3 border border-ivory-400">
+      <div className="bg-white p-4 rounded-xl border border-slate-200/90 shadow-xs">
         {/* Mobile Compact Progress Indicator */}
         <div className="md:hidden">
-          <div className="flex items-center justify-between mb-1.5 font-mono text-xs">
-            <span className="font-bold text-[#0c152b]">
-              STAGE 0{step}/06: {["Authority", "Info", "Financials", "Operations", "Vault", "Submit"][step - 1]}
+          <div className="flex items-center justify-between mb-2 text-xs">
+            <span className="font-bold text-slate-900">
+              Step {step} of 6: {["Authority", "Info", "Financials", "Operations", "Vault", "Submit"][step - 1]}
             </span>
-            <span className="font-bold text-teal-800">
+            <span className="font-bold text-blue-600">
               {Math.round((step / 6) * 100)}%
             </span>
           </div>
-          <div className="w-full bg-ivory-200 h-1.5 overflow-hidden">
+          <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
             <div
-              className="bg-teal-700 h-full transition-all duration-300"
+              className="bg-blue-600 h-full rounded-full transition-all duration-300"
               style={{ width: `${(step / 6) * 100}%` }}
             />
           </div>
         </div>
 
         {/* Desktop / Tablet Stepper Tabs */}
-        <div className="hidden md:flex items-center justify-between font-mono text-xs text-slate-500 overflow-x-auto gap-2">
+        <div className="hidden md:flex items-center justify-between text-xs text-slate-500 overflow-x-auto gap-2">
           {[
-            "01. Authority",
-            "02. Business Info",
-            "03. Financials",
-            "04. Operations",
-            "05. Data Room",
-            "06. Covenants & File",
+            "1. Authority",
+            "2. Business Info",
+            "3. Financials",
+            "4. Operations",
+            "5. Data Room",
+            "6. Covenants & File",
           ].map((title, i) => (
             <button
               key={i}
@@ -356,12 +357,12 @@ export default function SellerNewListingWizard() {
               onClick={() => {
                 if (validateStep(step)) setStep(i + 1);
               }}
-              className={`flex items-center gap-1 pb-1 border-b-2 uppercase tracking-wider font-semibold whitespace-nowrap transition-colors ${
+              className={`flex items-center gap-1.5 pb-2 border-b-2 font-semibold text-xs tracking-tight whitespace-nowrap transition-colors ${
                 step === i + 1
-                  ? "border-[#0c152b] text-[#0c152b] font-bold"
+                  ? "border-blue-600 text-blue-600 font-bold"
                   : step > i + 1
-                  ? "border-teal-700 text-teal-900"
-                  : "border-transparent text-slate-400"
+                  ? "border-emerald-500 text-emerald-700"
+                  : "border-transparent text-slate-400 hover:text-slate-600"
               }`}
             >
               <span>{title}</span>
@@ -372,42 +373,42 @@ export default function SellerNewListingWizard() {
 
       {/* LIVE PREVIEW DRAWER */}
       {showPreview && (
-        <div className="p-6 bg-ivory-100 border border-ivory-400 space-y-4 animate-in fade-in duration-200">
-          <div className="flex items-center justify-between font-mono">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#0c152b]">
-              ACQUISITION TEASER PREVIEW
+        <div className="p-6 bg-blue-50/40 rounded-2xl border border-blue-200/80 space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-900">
+              Acquisition Teaser Preview
             </span>
-            <span className="text-[10px] text-slate-500 uppercase">How verified buyers will see your mandate</span>
+            <span className="text-xs text-slate-500">How verified buyers will see your mandate</span>
           </div>
 
-          <div className="bg-white p-5 border border-ivory-400 space-y-3 font-mono">
-            <div className="flex items-center gap-2 text-[10px]">
-              <span className="bg-[#0c152b] text-white px-2 py-0.5 uppercase tracking-wider font-bold">
+          <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
+            <div className="flex items-center gap-2 text-xs">
+              <span className="bg-slate-900 text-white px-2.5 py-0.5 rounded-md font-semibold">
                 {industry}
               </span>
-              <span className="bg-teal-50 text-teal-800 font-bold px-2 py-0.5 border border-teal-200 uppercase">
+              <span className="bg-emerald-50 text-emerald-700 font-semibold px-2.5 py-0.5 rounded-md border border-emerald-200">
                 {isAudited ? "CA Audited Books" : "Management Accounts"}
               </span>
-              <span className="text-slate-500 font-sans">{city}, {state}</span>
+              <span className="text-slate-500">{city}, {state}</span>
             </div>
 
-            <h3 className="font-display text-lg font-bold text-[#0c152b]">
+            <h3 className="text-xl font-bold text-slate-900">
               {displayTitle || "Untitled Business Teaser"}
             </h3>
-            <p className="font-serif-editorial italic text-xs text-slate-600 font-normal">{tagline || "Tagline will appear here..."}</p>
+            <p className="text-sm text-slate-600">{tagline || "Tagline will appear here..."}</p>
 
-            <div className="pt-2 border-t border-ivory-300 grid grid-cols-3 gap-2 text-xs">
+            <div className="pt-3 border-t border-slate-100 grid grid-cols-3 gap-4 text-xs">
               <div>
-                <span className="text-[10px] text-slate-400 uppercase font-bold block">Asking EV</span>
-                <span className="font-display font-bold text-sm text-[#0c152b]">{formatINR(askingPrice)}</span>
+                <span className="text-slate-400 font-medium block">Asking Price</span>
+                <span className="font-bold text-base text-slate-900">{formatINR(askingPrice)}</span>
               </div>
               <div>
-                <span className="text-[10px] text-slate-400 uppercase font-bold block">Turnover</span>
-                <span className="font-semibold text-slate-800">{formatINR(annualRevenue)}</span>
+                <span className="text-slate-400 font-medium block">Turnover</span>
+                <span className="font-semibold text-sm text-slate-800">{formatINR(annualRevenue)}</span>
               </div>
               <div>
-                <span className="text-[10px] text-slate-400 uppercase font-bold block">EBITDA Margin</span>
-                <span className="font-semibold text-teal-800">
+                <span className="text-slate-400 font-medium block">EBITDA Margin</span>
+                <span className="font-semibold text-sm text-emerald-700">
                   {formatINR(annualEbitda)} ({((annualEbitda / (annualRevenue || 1)) * 100).toFixed(1)}%)
                 </span>
               </div>
@@ -417,7 +418,7 @@ export default function SellerNewListingWizard() {
       )}
 
       {/* STEP FORMS */}
-      <div className="bg-white p-6 sm:p-8 border border-ivory-400 space-y-6 text-xs">
+      <div className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/90 shadow-card space-y-6 text-sm">
         {/* STEP 1: Corporate Authority & Legal Proof */}
         {step === 1 && (
           <div className="space-y-4">
@@ -438,7 +439,7 @@ export default function SellerNewListingWizard() {
                   required
                   value={legalName}
                   onChange={(e) => setLegalName(e.target.value)}
-                  className={`w-full p-2.5 border rounded-[2px] ${errors.legalName ? "border-red-500" : "border-slate-300"}`}
+                  className={`w-full p-2.5 border rounded-lg ${errors.legalName ? "border-red-500" : "border-slate-300"}`}
                   placeholder="e.g. Acme Precision Tools Private Limited"
                 />
                 {errors.legalName && <p className="text-red-500 text-[11px] mt-1">{errors.legalName}</p>}
@@ -453,7 +454,7 @@ export default function SellerNewListingWizard() {
                   required
                   value={cinGstin}
                   onChange={(e) => setCinGstin(e.target.value)}
-                  className={`w-full p-2.5 border rounded-[2px] font-mono uppercase ${errors.cinGstin ? "border-red-500" : "border-slate-300"}`}
+                  className={`w-full p-2.5 border rounded-lg font-mono uppercase ${errors.cinGstin ? "border-red-500" : "border-slate-300"}`}
                   placeholder="e.g. U29100MH2012PTC123456"
                 />
                 {errors.cinGstin && <p className="text-red-500 text-[11px] mt-1">{errors.cinGstin}</p>}
@@ -465,7 +466,7 @@ export default function SellerNewListingWizard() {
               <select
                 value={authorityType}
                 onChange={(e) => setAuthorityType(e.target.value)}
-                className="w-full p-2.5 border border-slate-300 rounded-[2px] bg-white"
+                className="w-full p-2.5 border border-slate-300 rounded-lg bg-white"
               >
                 <option value="mca_director_cin">Promoter / Registered Director (DIN Verified)</option>
                 <option value="partnership_deed">Managing Partner (Partnership Deed)</option>
@@ -474,7 +475,7 @@ export default function SellerNewListingWizard() {
               </select>
             </div>
 
-            <div className="p-4 bg-emerald-50 rounded-[2px] border border-emerald-200 space-y-2">
+            <div className="p-4 bg-emerald-50 rounded-lg border border-emerald-200 space-y-2">
               <label className="flex items-start gap-2.5 cursor-pointer">
                 <input
                   type="checkbox"
@@ -508,7 +509,7 @@ export default function SellerNewListingWizard() {
                 value={displayTitle}
                 onChange={(e) => setDisplayTitle(e.target.value)}
                 placeholder="e.g. Profitable Tier-1 Precision Auto Component Manufacturer"
-                className={`w-full p-2.5 border rounded-[2px] ${errors.displayTitle ? "border-red-500" : "border-slate-300"}`}
+                className={`w-full p-2.5 border rounded-lg ${errors.displayTitle ? "border-red-500" : "border-slate-300"}`}
               />
               {errors.displayTitle && <p className="text-red-500 text-[11px] mt-1">{errors.displayTitle}</p>}
             </div>
@@ -522,7 +523,7 @@ export default function SellerNewListingWizard() {
                 value={tagline}
                 onChange={(e) => setTagline(e.target.value)}
                 placeholder="e.g. 15-year operational history with 40% repeat customer EBITDA margins"
-                className={`w-full p-2.5 border rounded-[2px] ${errors.tagline ? "border-red-500" : "border-slate-300"}`}
+                className={`w-full p-2.5 border rounded-lg ${errors.tagline ? "border-red-500" : "border-slate-300"}`}
               />
               {errors.tagline && <p className="text-red-500 text-[11px] mt-1">{errors.tagline}</p>}
             </div>
@@ -533,7 +534,7 @@ export default function SellerNewListingWizard() {
                 <select
                   value={industry}
                   onChange={(e) => setIndustry(e.target.value)}
-                  className="w-full p-2 border border-slate-300 rounded-[2px] bg-white"
+                  className="w-full p-2 border border-slate-300 rounded-lg bg-white"
                 >
                   <option value="Manufacturing">Manufacturing</option>
                   <option value="B2B SaaS & Tech">B2B SaaS & Tech</option>
@@ -550,7 +551,7 @@ export default function SellerNewListingWizard() {
                   type="text"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
-                  className="w-full p-2 border border-slate-300 rounded-[2px]"
+                  className="w-full p-2 border border-slate-300 rounded-lg"
                 />
               </div>
 
@@ -560,7 +561,7 @@ export default function SellerNewListingWizard() {
                   type="text"
                   value={state}
                   onChange={(e) => setState(e.target.value)}
-                  className="w-full p-2 border border-slate-300 rounded-[2px]"
+                  className="w-full p-2 border border-slate-300 rounded-lg"
                 />
               </div>
             </div>
@@ -572,7 +573,7 @@ export default function SellerNewListingWizard() {
                   type="number"
                   value={yearsRunning}
                   onChange={(e) => setYearsRunning(Number(e.target.value))}
-                  className="w-full p-2 border border-slate-300 rounded-[2px]"
+                  className="w-full p-2 border border-slate-300 rounded-lg"
                 />
               </div>
 
@@ -581,7 +582,7 @@ export default function SellerNewListingWizard() {
                 <select
                   value={businessType}
                   onChange={(e) => setBusinessType(e.target.value as any)}
-                  className="w-full p-2 border border-slate-300 rounded-[2px] bg-white"
+                  className="w-full p-2 border border-slate-300 rounded-lg bg-white"
                 >
                   <option value="physical">Physical Plant / Factory</option>
                   <option value="online">Online / SaaS</option>
@@ -595,7 +596,7 @@ export default function SellerNewListingWizard() {
                 <select
                   value={saleStructure}
                   onChange={(e) => setSaleStructure(e.target.value as any)}
-                  className="w-full p-2 border border-slate-300 rounded-[2px] bg-white"
+                  className="w-full p-2 border border-slate-300 rounded-lg bg-white"
                 >
                   <option value="share_sale">100% Share Sale</option>
                   <option value="asset_sale">Asset Sale (BTA)</option>
@@ -621,7 +622,7 @@ export default function SellerNewListingWizard() {
                   type="number"
                   value={askingPrice}
                   onChange={(e) => setAskingPrice(Number(e.target.value))}
-                  className="w-full p-2.5 border border-slate-300 rounded-[2px]"
+                  className="w-full p-2.5 border border-slate-300 rounded-lg"
                 />
                 <span className="text-[10px] text-emerald-700 font-bold mt-1 block">
                   Formatted: {formatINR(askingPrice)}
@@ -635,7 +636,7 @@ export default function SellerNewListingWizard() {
                   type="number"
                   value={annualRevenue}
                   onChange={(e) => setAnnualRevenue(Number(e.target.value))}
-                  className="w-full p-2.5 border border-slate-300 rounded-[2px]"
+                  className="w-full p-2.5 border border-slate-300 rounded-lg"
                 />
                 <span className="text-[10px] text-slate-500 mt-1 block">
                   Formatted: {formatINR(annualRevenue)}
@@ -648,7 +649,7 @@ export default function SellerNewListingWizard() {
                   type="number"
                   value={annualEbitda}
                   onChange={(e) => setAnnualEbitda(Number(e.target.value))}
-                  className="w-full p-2.5 border border-slate-300 rounded-[2px]"
+                  className="w-full p-2.5 border border-slate-300 rounded-lg"
                 />
                 <span className="text-[10px] text-slate-500 mt-1 block">
                   Margin: {((annualEbitda / (annualRevenue || 1)) * 100).toFixed(1)}%
@@ -663,7 +664,7 @@ export default function SellerNewListingWizard() {
                   type="number"
                   value={assetsValue}
                   onChange={(e) => setAssetsValue(Number(e.target.value))}
-                  className="w-full p-2.5 border border-slate-300 rounded-[2px]"
+                  className="w-full p-2.5 border border-slate-300 rounded-lg"
                 />
               </div>
 
@@ -673,7 +674,7 @@ export default function SellerNewListingWizard() {
                   type="number"
                   value={inventoryValue}
                   onChange={(e) => setInventoryValue(Number(e.target.value))}
-                  className="w-full p-2.5 border border-slate-300 rounded-[2px]"
+                  className="w-full p-2.5 border border-slate-300 rounded-lg"
                 />
               </div>
             </div>
@@ -710,7 +711,7 @@ export default function SellerNewListingWizard() {
                 rows={3}
                 value={executiveSummary}
                 onChange={(e) => setExecutiveSummary(e.target.value)}
-                className="w-full p-2.5 border border-slate-300 rounded-[2px] text-xs"
+                className="w-full p-2.5 border border-slate-300 rounded-lg text-xs"
               />
               {errors.executiveSummary && <p className="text-red-500 text-[11px] mt-1">{errors.executiveSummary}</p>}
             </div>
@@ -721,7 +722,7 @@ export default function SellerNewListingWizard() {
                 type="text"
                 value={products}
                 onChange={(e) => setProducts(e.target.value)}
-                className="w-full p-2.5 border border-slate-300 rounded-[2px]"
+                className="w-full p-2.5 border border-slate-300 rounded-lg"
               />
             </div>
 
@@ -731,7 +732,7 @@ export default function SellerNewListingWizard() {
                 type="text"
                 value={assetsIncluded}
                 onChange={(e) => setAssetsIncluded(e.target.value)}
-                className="w-full p-2.5 border border-slate-300 rounded-[2px]"
+                className="w-full p-2.5 border border-slate-300 rounded-lg"
               />
             </div>
 
@@ -741,7 +742,7 @@ export default function SellerNewListingWizard() {
                 type="text"
                 value={reasonForSale}
                 onChange={(e) => setReasonForSale(e.target.value)}
-                className="w-full p-2.5 border border-slate-300 rounded-[2px]"
+                className="w-full p-2.5 border border-slate-300 rounded-lg"
               />
             </div>
           </div>
@@ -760,12 +761,12 @@ export default function SellerNewListingWizard() {
               <label className="block font-semibold text-slate-700">Photo Gallery ({images.length} photos)</label>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {images.map((img, idx) => (
-                  <div key={idx} className="relative h-24 rounded-[2px] overflow-hidden border border-slate-200 group">
+                  <div key={idx} className="relative h-24 rounded-lg overflow-hidden border border-slate-200 group">
                     <Image src={img} alt={`Preview ${idx}`} fill sizes="150px" className="object-cover" />
                     <button
                       type="button"
                       onClick={() => handleRemoveImage(idx)}
-                      className="absolute top-1 right-1 p-1 bg-red-600 text-white rounded-[2px] opacity-0 group-hover:opacity-100 transition"
+                      className="absolute top-1 right-1 p-1 bg-red-600 text-white rounded-lg opacity-0 group-hover:opacity-100 transition"
                       title="Remove image"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
@@ -780,12 +781,12 @@ export default function SellerNewListingWizard() {
                   placeholder="Paste image URL (e.g. from Unsplash or corporate CDN)..."
                   value={newImageUrl}
                   onChange={(e) => setNewImageUrl(e.target.value)}
-                  className="flex-1 p-2 border border-slate-300 rounded-[2px] text-xs"
+                  className="flex-1 p-2 border border-slate-300 rounded-lg text-xs"
                 />
                 <button
                   type="button"
                   onClick={handleAddImage}
-                  className="px-3 py-2 bg-navy-900 text-white rounded-[2px] text-xs font-semibold hover:bg-navy-800"
+                  className="px-3 py-2 bg-navy-900 text-white rounded-lg text-xs font-semibold hover:bg-navy-800"
                 >
                   Add Photo
                 </button>
@@ -815,7 +816,7 @@ export default function SellerNewListingWizard() {
                 ].map((mode) => (
                   <label
                     key={mode.key}
-                    className={`block p-3 rounded-[2px] border cursor-pointer transition ${
+                    className={`block p-3 rounded-lg border cursor-pointer transition ${
                       visibility === mode.key ? "border-emerald-600 bg-emerald-50/70" : "border-slate-200"
                     }`}
                   >
@@ -845,7 +846,7 @@ export default function SellerNewListingWizard() {
               <p className="text-slate-500 text-xs">Review marketplace covenants before submitting for CA review.</p>
             </div>
 
-            <div className="p-4 bg-slate-50 rounded-[2px] border border-slate-200 space-y-2 text-xs">
+            <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 space-y-2 text-xs">
               <div className="flex justify-between">
                 <span className="text-slate-500">Target Opportunity:</span>
                 <span className="font-bold text-slate-900">{displayTitle}</span>
@@ -860,7 +861,7 @@ export default function SellerNewListingWizard() {
               </div>
             </div>
 
-            <div className="p-4 bg-amber-50/80 rounded-[2px] border border-amber-200 text-xs text-amber-950 space-y-2">
+            <div className="p-4 bg-amber-50/80 rounded-lg border border-amber-200 text-xs text-amber-950 space-y-2">
               <h4 className="font-bold flex items-center gap-1.5 text-sm">
                 <Scale className="w-4 h-4 text-amber-800" />
                 180-Day Deal Attribution Covenant
@@ -884,14 +885,14 @@ export default function SellerNewListingWizard() {
         )}
 
         {/* Wizard Footer Controls */}
-        <div className="pt-5 border-t border-ivory-300 flex items-center justify-between font-mono">
+        <div className="pt-6 border-t border-slate-200 flex items-center justify-between">
           {step > 1 ? (
             <button
               type="button"
               onClick={() => setStep(step - 1)}
               className="btn-secondary"
             >
-              <ArrowLeft className="w-3.5 h-3.5" />
+              <ArrowLeft className="w-4 h-4" />
               <span>Back</span>
             </button>
           ) : (
@@ -911,19 +912,19 @@ export default function SellerNewListingWizard() {
               <button
                 type="button"
                 onClick={handleNextStep}
-                className="btn-primary"
+                className="btn-brand"
               >
                 <span>Continue</span>
-                <ArrowRight className="w-3.5 h-3.5 text-teal-400" />
+                <ArrowRight className="w-4 h-4" />
               </button>
             ) : (
               <button
                 type="button"
                 disabled={!agreedToCommission || submitting}
                 onClick={() => handleSubmit("pending_review")}
-                className="btn-teal btn-lg"
+                className="btn-brand btn-lg"
               >
-                <ShieldCheck className="w-4 h-4 text-teal-300" />
+                <ShieldCheck className="w-4 h-4" />
                 <span>{submitting ? "Transmitting Mandate..." : "Submit for CA Review"}</span>
               </button>
             )}

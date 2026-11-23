@@ -57,15 +57,15 @@ export function NDAWorkflowModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="relative w-full max-w-2xl bg-white rounded-[2px] shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[90vh]">
         {/* Modal Header */}
-        <div className="px-6 py-4 bg-navy-900 text-white flex items-center justify-between">
+        <div className="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 bg-emerald-500/20 text-emerald-400 rounded-lg">
+            <div className="p-2 bg-blue-500/20 text-blue-400 rounded-lg">
               <Lock className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-white">Digital Confidentiality & Non-Disclosure Agreement</h3>
+              <h3 className="text-base font-bold text-white">Digital Non-Disclosure Agreement</h3>
               <p className="text-xs text-slate-300">Indian Contract Act, 1872 Compliant Digital Bilateral Covenant</p>
             </div>
           </div>
@@ -80,10 +80,10 @@ export function NDAWorkflowModal({
         {/* Modal Body / Agreement Text */}
         <div className="p-6 overflow-y-auto space-y-4 text-xs text-slate-700 leading-relaxed flex-1">
           {/* Summary Box */}
-          <div className="bg-slate-50 border border-slate-200 p-3.5 rounded-[2px] space-y-1.5">
+          <div className="bg-slate-50 border border-slate-200 p-3.5 rounded-xl space-y-1.5">
             <div className="flex justify-between">
               <span className="font-semibold text-slate-500">Target Opportunity:</span>
-              <span className="font-bold text-navy-900">{listing.displayTitle}</span>
+              <span className="font-bold text-slate-900">{listing.displayTitle}</span>
             </div>
             <div className="flex justify-between">
               <span className="font-semibold text-slate-500">Disclosing Principal:</span>
@@ -96,29 +96,29 @@ export function NDAWorkflowModal({
           </div>
 
           {/* Legal Clauses Scroll Box */}
-          <div className="border border-slate-200 rounded-[2px] p-4 bg-white space-y-3 h-48 overflow-y-auto text-slate-600 font-mono text-[11px] leading-normal shadow-inner">
-            <p className="font-bold text-slate-900 font-sans text-xs">
+          <div className="border border-slate-200 rounded-xl p-4 bg-white space-y-3 h-48 overflow-y-auto text-slate-600 text-xs leading-normal shadow-inner">
+            <p className="font-bold text-slate-900 text-xs">
               1. SCOPE OF CONFIDENTIAL PROPRIETARY INFORMATION
             </p>
             <p>
               The Disclosing Party agrees to disclose to the Receiving Party certain sensitive proprietary information including but not limited to audited/management profit & loss accounts, balance sheets, customer lists, vendor supplier agreements, software code, intellectual property schedules, and employee compensation registers (collectively, &quot;Evaluation Material&quot;).
             </p>
 
-            <p className="font-bold text-slate-900 font-sans text-xs">
+            <p className="font-bold text-slate-900 text-xs">
               2. NON-DISCLOSURE, SECURE CUSTODY & WATERMARKING
             </p>
             <p>
               The Receiving Party agrees to treat all Evaluation Material with the strictest confidentiality. The Receiving Party specifically consents that all downloaded or previewed documents will be dynamically embedded with a forensic cryptographic watermark containing the Receiving Party&apos;s legal name, company designation, IP address, and timestamp.
             </p>
 
-            <p className="font-bold text-slate-900 font-sans text-xs">
+            <p className="font-bold text-slate-900 text-xs">
               3. NON-CIRCUMVENTION & DEAL ATTRIBUTION
             </p>
             <p>
               The Receiving Party covenants and agrees that it will not directly or indirectly circumvent VyapaarSetu to contact the seller, its directors, employees, suppliers, or customers, nor attempt to execute any acquisition, share transfer, or asset purchase outside the VyapaarSetu Deal Attribution Framework for a period of eighteen (18) months from the date hereof.
             </p>
 
-            <p className="font-bold text-slate-900 font-sans text-xs">
+            <p className="font-bold text-slate-900 text-xs">
               4. REMEDIES & GOVERNING JURISDICTION
             </p>
             <p>
@@ -130,7 +130,7 @@ export function NDAWorkflowModal({
           <form onSubmit={handleSign} className="space-y-4 pt-2">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
                   Acquiring Entity / Legal Company
                 </label>
                 <input
@@ -138,13 +138,13 @@ export function NDAWorkflowModal({
                   required
                   value={companyName}
                   onChange={(e) => setCompanyName(e.target.value)}
-                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-hidden"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs focus:ring-1 focus:ring-blue-500 focus:outline-hidden"
                   placeholder="e.g. VP Growth Investments Ltd"
                 />
               </div>
 
               <div>
-                <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
                   Authorized Signatory Designation
                 </label>
                 <input
@@ -152,14 +152,14 @@ export function NDAWorkflowModal({
                   required
                   value={signerTitle}
                   onChange={(e) => setSignerTitle(e.target.value)}
-                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-hidden"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs focus:ring-1 focus:ring-blue-500 focus:outline-hidden"
                   placeholder="e.g. Director / Partner"
                 />
               </div>
             </div>
 
             {/* Checkbox */}
-            <div className="flex items-start gap-2.5 p-3 rounded-[2px] bg-emerald-50/70 border border-emerald-200">
+            <div className="flex items-start gap-2.5 p-3.5 rounded-xl bg-emerald-50 border border-emerald-200">
               <input
                 id="nda-checkbox"
                 type="checkbox"
@@ -173,7 +173,7 @@ export function NDAWorkflowModal({
             </div>
 
             {/* Actions */}
-            <div className="pt-2 flex items-center justify-end gap-3 border-t border-slate-100 font-mono">
+            <div className="pt-2 flex items-center justify-end gap-3 border-t border-slate-100">
               <button
                 type="button"
                 onClick={onClose}
@@ -184,9 +184,9 @@ export function NDAWorkflowModal({
               <button
                 type="submit"
                 disabled={!agreed || submitting}
-                className="btn-teal btn-sm"
+                className="btn-brand btn-sm inline-flex items-center gap-1.5"
               >
-                <ShieldCheck className="w-4 h-4 text-teal-300" />
+                <ShieldCheck className="w-4 h-4" />
                 <span>{submitting ? "Cryptographically Signing..." : "Execute NDA & Unlock Data Vault"}</span>
               </button>
             </div>

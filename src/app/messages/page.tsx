@@ -19,6 +19,7 @@ import {
   CheckCircle2,
   FileCheck,
   Check,
+  ArrowRight,
 } from "lucide-react";
 
 export default function MessagesPage() {
@@ -90,7 +91,7 @@ export default function MessagesPage() {
       senderId: "system",
       senderName: "VyapaarSetu Protocol Desk",
       senderRole: "system",
-      content: `COMMERCIAL PROTOCOL NOTICE: In-person inspection confirmed for "${meetingAgenda}" on ${meetingDate} at ${meetingTime}. Both parties remain bound by active bilateral non-disclosure covenants.`,
+      content: `Inspection confirmed: "${meetingAgenda}" on ${meetingDate} at ${meetingTime}. Both parties remain bound by active bilateral non-disclosure agreements.`,
       timestamp: new Date().toISOString(),
       isRead: true,
       isSystemNotice: true,
@@ -102,64 +103,67 @@ export default function MessagesPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
-      {/* Editorial Masthead */}
-      <div className="border-b border-[#e2dfd6] pb-6 space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-3 text-[11px] font-mono uppercase tracking-wider text-slate-500">
+      {/* Header */}
+      <div className="border-b border-slate-200 pb-6 space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 bg-teal-600 inline-block" />
-            <span>SECURE DEAL ROOM TERMINAL</span>
-            <span>&bull;</span>
-            <span className="text-navy-950 font-bold">180-DAY ATTRIBUTION PROTOCOL</span>
+            <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
+            <span className="font-semibold text-slate-700">Deal Room Messenger</span>
+            <span>•</span>
+            <span className="text-slate-500">180-Day Attribution Protected</span>
           </div>
-          <span className="text-slate-400">ENCRYPTED BILATERAL LOG</span>
+          <span className="inline-flex items-center gap-1.5 text-emerald-700 font-semibold bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200/80 text-xs">
+            <ShieldCheck className="w-3.5 h-3.5" />
+            End-to-End Encrypted Audit Trail
+          </span>
         </div>
 
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
-            <h1 className="font-display text-3xl sm:text-4xl font-extrabold text-navy-950 tracking-tight">
-              Acquisition Communications
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+              Negotiation Rooms
             </h1>
-            <p className="font-mono text-xs text-slate-500 mt-1">
-              Statutory deal channel. All commercial discussions are time-stamped and preserved for transaction attribution.
+            <p className="text-xs sm:text-sm text-slate-500 mt-1">
+              Confidential deal communications. Time-stamped and preserved for transaction attribution.
             </p>
           </div>
 
           {/* Mobile Tab Toggle */}
-          <div className="md:hidden flex items-center gap-2 bg-[#f5f4ef] p-1 border border-[#e2dfd6]">
+          <div className="md:hidden flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl">
             <button
               onClick={() => setMobileTab("threads")}
-              className={`px-3 py-1.5 font-mono text-xs uppercase font-bold transition ${
+              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition ${
                 mobileTab === "threads"
-                  ? "bg-white text-navy-950 border border-[#e2dfd6] shadow-xs"
+                  ? "bg-white text-slate-900 shadow-sm"
                   : "text-slate-600"
               }`}
             >
-              THREADS ({conversations.length})
+              Threads ({conversations.length})
             </button>
             <button
               onClick={() => setMobileTab("chat")}
-              className={`px-3 py-1.5 font-mono text-xs uppercase font-bold transition ${
+              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition ${
                 mobileTab === "chat"
-                  ? "bg-white text-navy-950 border border-[#e2dfd6] shadow-xs"
+                  ? "bg-white text-slate-900 shadow-sm"
                   : "text-slate-600"
               }`}
             >
-              ACTIVE ROOM
+              Active Room
             </button>
           </div>
         </div>
       </div>
 
       {/* Main Split Terminal */}
-      <div className="bg-white border border-[#e2dfd6] grid grid-cols-1 md:grid-cols-3 min-h-[660px] overflow-hidden">
+      <div className="bg-white rounded-2xl border border-slate-200/90 shadow-card grid grid-cols-1 md:grid-cols-3 min-h-[660px] overflow-hidden">
         {/* Left: Deal Room Thread Index */}
         <div
-          className={`border-r border-[#e2dfd6] divide-y divide-[#e2dfd6] overflow-y-auto max-h-[660px] bg-[#fbfbf9] ${
+          className={`border-r border-slate-200 divide-y divide-slate-100 overflow-y-auto max-h-[660px] bg-slate-50/40 ${
             mobileTab === "threads" ? "block" : "hidden md:block"
           }`}
         >
-          <div className="p-3 bg-[#f5f4ef] font-mono text-[10px] font-bold text-slate-500 uppercase tracking-wider border-b border-[#e2dfd6]">
-            ACTIVE DEAL ROOMS [{conversations.length}]
+          <div className="p-3.5 bg-slate-100/70 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200">
+            Active Rooms ({conversations.length})
           </div>
 
           {conversations.map((c) => {
@@ -173,23 +177,23 @@ export default function MessagesPage() {
                 }}
                 className={`w-full text-left p-4 hover:bg-white transition-colors flex flex-col gap-1.5 ${
                   isSelected
-                    ? "bg-white border-l-4 border-navy-950 shadow-xs"
+                    ? "bg-white border-l-4 border-blue-600 shadow-xs"
                     : "border-l-4 border-transparent"
                 }`}
               >
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-[10px] uppercase tracking-wider text-slate-400">
-                    DEAL ROOM #{c.id.toUpperCase()}
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-slate-400 font-medium">
+                    Room #{c.id}
                   </span>
-                  <span className="font-mono text-[10px] text-slate-400 tabular-nums">
+                  <span className="text-slate-400 text-[11px]">
                     {formatDate(c.lastMessageTime)}
                   </span>
                 </div>
-                <div className="font-display font-bold text-navy-950 text-xs truncate">
-                  {c.buyerName} &harr; {c.sellerName}
+                <div className="font-bold text-slate-900 text-sm truncate">
+                  {c.buyerName} ↔ {c.sellerName}
                 </div>
-                <p className="font-mono text-[11px] text-teal-800 font-semibold truncate">{c.listingTitle}</p>
-                <p className="text-[11px] text-slate-500 truncate font-sans italic">&ldquo;{c.lastMessage}&rdquo;</p>
+                <p className="text-xs text-blue-600 font-medium truncate">{c.listingTitle}</p>
+                <p className="text-xs text-slate-500 truncate line-clamp-1">&ldquo;{c.lastMessage}&rdquo;</p>
               </button>
             );
           })}
@@ -203,33 +207,33 @@ export default function MessagesPage() {
             }`}
           >
             {/* Thread Header with Deal Reference */}
-            <div className="p-5 bg-[#fbfbf9] border-b border-[#e2dfd6] flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs">
+            <div className="p-5 bg-slate-50/60 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs">
               <div className="space-y-1">
-                <div className="flex items-center gap-2 font-mono text-[10px]">
-                  <span className="text-teal-800 font-bold bg-teal-50 border border-teal-200 px-2 py-0.5 uppercase tracking-wider">
-                    TARGET ASSET MEMORANDUM
+                <div className="flex items-center gap-2 text-xs">
+                  <span className="text-blue-700 font-semibold bg-blue-50 border border-blue-200 px-2.5 py-0.5 rounded-full">
+                    Target Opportunity
                   </span>
-                  <span className="text-slate-400">MANDATE REF #{activeConv.listingId}</span>
+                  <span className="text-slate-400">Ref #{activeConv.listingId}</span>
                 </div>
-                <h3 className="font-display font-bold text-navy-950 text-base">{activeConv.listingTitle}</h3>
-                <div className="font-mono text-xs text-slate-500">
-                  SELLER: <strong className="text-navy-900">{activeConv.sellerName}</strong> &bull; BUYER:{" "}
-                  <strong className="text-navy-900">{activeConv.buyerName}</strong>
+                <h3 className="font-bold text-slate-900 text-base">{activeConv.listingTitle}</h3>
+                <div className="text-xs text-slate-500">
+                  Seller: <strong className="text-slate-800 font-semibold">{activeConv.sellerName}</strong> • Buyer:{" "}
+                  <strong className="text-slate-800 font-semibold">{activeConv.buyerName}</strong>
                 </div>
               </div>
 
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setIsSchedulingMeeting(!isSchedulingMeeting)}
-                  className="btn-primary btn-sm"
+                  className="btn-brand btn-sm inline-flex items-center gap-1.5"
                 >
-                  <Calendar className="w-3.5 h-3.5 text-teal-400" />
-                  <span>SCHEDULE INSPECTION</span>
+                  <Calendar className="w-3.5 h-3.5" />
+                  <span>Schedule Inspection</span>
                 </button>
                 <Link
                   href={`/businesses/${activeConv.listingId}`}
                   className="btn-secondary btn-sm p-2"
-                  title="View Listing Teaser"
+                  title="View Listing Details"
                 >
                   <ArrowUpRight className="w-4 h-4" />
                 </Link>
@@ -238,20 +242,20 @@ export default function MessagesPage() {
 
             {/* Scheduled Milestone Widget (if scheduled) */}
             {activeConv.meetingScheduled && (
-              <div className="m-4 p-4 bg-teal-50/70 border border-teal-200 text-xs text-teal-950 flex items-start justify-between">
+              <div className="m-4 p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-emerald-950 flex items-start justify-between">
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-4 h-4 text-teal-700 flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
                   <div className="space-y-1">
-                    <span className="font-mono text-[10px] uppercase font-bold text-teal-900 tracking-wider block">
-                      CONFIRMED DUE DILIGENCE MILESTONE
+                    <span className="text-[11px] uppercase font-bold text-emerald-800 tracking-wider block">
+                      Confirmed Due Diligence Milestone
                     </span>
-                    <p className="font-sans font-semibold text-xs text-teal-950">
+                    <p className="font-semibold text-xs text-slate-900">
                       {activeConv.meetingScheduled.agenda}
                     </p>
-                    <div className="font-mono text-[11px] text-teal-800 flex flex-wrap items-center gap-3">
-                      <span>DATE: {activeConv.meetingScheduled.date}</span>
-                      <span>TIME: {activeConv.meetingScheduled.time}</span>
-                      <span>FORMAT: {activeConv.meetingScheduled.platform.toUpperCase()}</span>
+                    <div className="text-xs text-emerald-700 flex flex-wrap items-center gap-3">
+                      <span>Date: {activeConv.meetingScheduled.date}</span>
+                      <span>Time: {activeConv.meetingScheduled.time}</span>
+                      <span>Format: {activeConv.meetingScheduled.platform}</span>
                     </div>
                   </div>
                 </div>
@@ -260,73 +264,73 @@ export default function MessagesPage() {
 
             {/* Meeting Scheduler Drawer */}
             {isSchedulingMeeting && (
-              <form onSubmit={handleSaveMeeting} className="m-4 p-5 bg-[#fbfbf9] border border-[#e2dfd6] space-y-3 text-xs">
-                <div className="border-b border-[#e2dfd6] pb-2">
-                  <h4 className="font-display font-bold text-navy-950 text-sm">
-                    SCHEDULE PHYSICAL INSPECTION OR VIRTUAL AUDIT
+              <form onSubmit={handleSaveMeeting} className="m-4 p-5 bg-slate-50 rounded-xl border border-slate-200 space-y-3 text-xs">
+                <div className="border-b border-slate-200 pb-2">
+                  <h4 className="font-bold text-slate-900 text-sm">
+                    Schedule Plant Walkthrough or Diligence Call
                   </h4>
-                  <p className="text-[11px] text-slate-500 font-sans">
-                    Log formal inspection details for confirmatory due diligence records.
+                  <p className="text-xs text-slate-500">
+                    Log formal inspection details for diligence records.
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[10px] uppercase tracking-wider text-slate-600 mb-1 font-bold">
-                      TARGET DATE
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                      Target Date
                     </label>
                     <input
                       type="date"
                       value={meetingDate}
                       onChange={(e) => setMeetingDate(e.target.value)}
-                      className="w-full p-2 border border-[#e2dfd6] bg-white text-navy-950 font-mono text-xs focus:ring-1 focus:ring-navy-950 focus:outline-hidden"
+                      className="w-full p-2 border border-slate-300 rounded-lg bg-white text-slate-900 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-hidden"
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] uppercase tracking-wider text-slate-600 mb-1 font-bold">
-                      TIME (IST)
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                      Time (IST)
                     </label>
                     <input
                       type="text"
                       value={meetingTime}
                       onChange={(e) => setMeetingTime(e.target.value)}
-                      className="w-full p-2 border border-[#e2dfd6] bg-white text-navy-950 font-mono text-xs focus:ring-1 focus:ring-navy-950 focus:outline-hidden"
+                      className="w-full p-2 border border-slate-300 rounded-lg bg-white text-slate-900 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-hidden"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block font-mono text-[10px] uppercase tracking-wider text-slate-600 mb-1 font-bold">
-                    AGENDA & PHYSICAL / VIRTUAL LOCATION
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Agenda & Location
                   </label>
                   <input
                     type="text"
                     value={meetingAgenda}
                     onChange={(e) => setMeetingAgenda(e.target.value)}
-                    className="w-full p-2 border border-[#e2dfd6] bg-white text-navy-950 text-xs focus:ring-1 focus:ring-navy-950 focus:outline-hidden font-sans"
+                    className="w-full p-2 border border-slate-300 rounded-lg bg-white text-slate-900 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-hidden"
                   />
                 </div>
 
-                <div className="flex justify-end gap-2 pt-2 border-t border-[#e2dfd6]">
+                <div className="flex justify-end gap-2 pt-2 border-t border-slate-200">
                   <button
                     type="button"
                     onClick={() => setIsSchedulingMeeting(false)}
                     className="btn-secondary btn-sm"
                   >
-                    CANCEL
+                    Cancel
                   </button>
                   <button
                     type="submit"
-                    className="btn-teal btn-sm"
+                    className="btn-brand btn-sm"
                   >
-                    CONFIRM & RECORD PROTOCOL EVENT
+                    Confirm & Save Milestone
                   </button>
                 </div>
               </form>
             )}
 
             {/* Message Thread History */}
-            <div className="p-6 space-y-4 overflow-y-auto max-h-[420px] flex-1 bg-[#fbfbf9]/40">
+            <div className="p-6 space-y-4 overflow-y-auto max-h-[420px] flex-1 bg-white">
               {convMessages.map((msg) => {
                 const isMe = msg.senderId === currentUser.id;
                 const isSystem = msg.isSystemNotice;
@@ -335,13 +339,13 @@ export default function MessagesPage() {
                   return (
                     <div
                       key={msg.id}
-                      className="my-4 p-4 bg-amber-50/90 border border-amber-300 text-center text-xs text-amber-950 leading-relaxed font-sans"
+                      className="my-4 p-4 bg-amber-50 rounded-xl border border-amber-200 text-center text-xs text-amber-900 leading-relaxed"
                     >
-                      <span className="font-mono font-bold block text-[10px] uppercase tracking-wider text-amber-900 mb-1">
-                        STATUTORY PROTOCOL NOTICE
+                      <span className="font-bold block text-[10px] uppercase tracking-wider text-amber-800 mb-1">
+                        Platform System Notice
                       </span>
                       {msg.content}
-                      <span className="block font-mono text-[10px] text-amber-700 mt-1.5 tabular-nums">
+                      <span className="block text-[10px] text-amber-600 mt-1.5">
                         {formatDate(msg.timestamp)}
                       </span>
                     </div>
@@ -353,19 +357,19 @@ export default function MessagesPage() {
                     key={msg.id}
                     className={`flex flex-col ${isMe ? "items-end" : "items-start"}`}
                   >
-                    <span className="font-mono text-[10px] text-slate-500 mb-1 uppercase tracking-wider px-1">
-                      {msg.senderName} &bull; {msg.senderRole}
+                    <span className="text-[11px] text-slate-400 mb-1 px-1 font-medium">
+                      {msg.senderName} • {msg.senderRole}
                     </span>
                     <div
-                      className={`max-w-md p-4 text-xs leading-relaxed border ${
+                      className={`max-w-md p-3.5 text-xs leading-relaxed rounded-2xl shadow-xs ${
                         isMe
-                          ? "bg-navy-950 text-white border-navy-950"
-                          : "bg-white text-navy-950 border-[#e2dfd6] shadow-2xs"
+                          ? "bg-blue-600 text-white rounded-br-xs"
+                          : "bg-slate-100 text-slate-900 border border-slate-200/80 rounded-bl-xs"
                       }`}
                     >
                       {msg.content}
                     </div>
-                    <span className="font-mono text-[9px] text-slate-400 mt-1 px-1 tabular-nums">
+                    <span className="text-[10px] text-slate-400 mt-1 px-1">
                       {new Date(msg.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                     </span>
                   </div>
@@ -374,31 +378,31 @@ export default function MessagesPage() {
             </div>
 
             {/* Message Input Box */}
-            <form onSubmit={handleSendMessage} className="p-4 bg-white border-t border-[#e2dfd6] flex gap-2">
+            <form onSubmit={handleSendMessage} className="p-4 bg-white border-t border-slate-200 flex gap-2">
               <input
                 type="text"
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
                 placeholder="Type confidential acquisition message or regulatory query..."
-                className="flex-1 p-2.5 border border-[#e2dfd6] bg-[#fbfbf9] text-xs text-navy-950 placeholder:text-slate-400 focus:ring-1 focus:ring-navy-950 focus:outline-hidden font-sans"
+                className="flex-1 p-2.5 border border-slate-300 rounded-lg bg-white text-xs text-slate-900 placeholder:text-slate-400 focus:ring-1 focus:ring-blue-500 focus:outline-hidden"
               />
               <button
                 type="submit"
-                className="btn-primary"
+                className="btn-brand inline-flex items-center gap-1.5"
               >
-                <Send className="w-3.5 h-3.5 text-teal-400" />
-                <span>SEND</span>
+                <Send className="w-3.5 h-3.5" />
+                <span>Send</span>
               </button>
             </form>
           </div>
         ) : (
           <div className="md:col-span-2 p-16 text-center space-y-3 bg-white">
-            <div className="w-12 h-12 border border-[#e2dfd6] bg-[#fbfbf9] flex items-center justify-center mx-auto text-slate-400">
+            <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mx-auto text-slate-400">
               <MessageSquare className="w-6 h-6" />
             </div>
-            <h3 className="font-display font-bold text-navy-950 text-base">NO DEAL ROOM SELECTED</h3>
-            <p className="text-xs text-slate-500 font-sans max-w-sm mx-auto">
-              Select an active transaction thread from the index to inspect deal records and communicate.
+            <h3 className="font-bold text-slate-900 text-base">No Deal Room Selected</h3>
+            <p className="text-xs text-slate-500 max-w-sm mx-auto">
+              Select an active transaction thread from the left pane to inspect deal records and communicate.
             </p>
           </div>
         )}

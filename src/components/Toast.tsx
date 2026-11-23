@@ -53,7 +53,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
           return (
             <div
               key={toast.id}
-              className={`pointer-events-auto p-4 rounded-[2px] shadow-xl border flex items-start gap-3 transition-all animate-in slide-in-from-bottom-2 duration-200 ${
+              className={`pointer-events-auto p-4 rounded-xl shadow-xl border flex items-start gap-3 transition-all animate-in slide-in-from-bottom-2 duration-200 ${
                 isError
                   ? "bg-red-950 text-white border-red-800"
                   : isInfo

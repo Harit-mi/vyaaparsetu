@@ -2,7 +2,7 @@ import React from "react";
 
 export function ListingCardSkeleton() {
   return (
-    <div className="bg-white rounded-[2px] border border-slate-200 shadow-xs overflow-hidden animate-pulse">
+    <div className="bg-white rounded-2xl border border-slate-200/90 shadow-card overflow-hidden animate-pulse">
       <div className="h-48 bg-slate-200" />
       <div className="p-5 space-y-3">
         <div className="flex gap-2">

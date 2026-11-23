@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-export type ButtonVariant = "primary" | "secondary" | "teal" | "ghost" | "danger";
+export type ButtonVariant = "primary" | "brand" | "secondary" | "teal" | "ghost" | "danger";
 export type ButtonSize = "sm" | "md" | "lg" | "icon";
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -35,6 +35,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     // Determine variant class
     const variantClasses: Record<ButtonVariant, string> = {
       primary: "btn-primary",
+      brand: "btn-brand",
       secondary: "btn-secondary",
       teal: "btn-teal",
       ghost: "btn-ghost",

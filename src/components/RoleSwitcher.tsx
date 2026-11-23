@@ -45,13 +45,13 @@ export function RoleSwitcher() {
   const getRoleBadge = (role: UserRole) => {
     switch (role) {
       case "admin":
-        return { label: "COMPLIANCE DESK", tag: "Admin", border: "border-purple-300 text-purple-900 bg-purple-50", icon: ShieldCheck };
+        return { label: "Compliance Desk", tag: "Admin", badgeClass: "bg-purple-50 text-purple-700 border-purple-200", icon: ShieldCheck };
       case "seller":
-        return { label: "MANDATE PROMOTER", tag: "Seller", border: "border-blue-300 text-blue-900 bg-blue-50", icon: Briefcase };
+        return { label: "Promoter", tag: "Seller", badgeClass: "bg-blue-50 text-blue-700 border-blue-200", icon: Briefcase };
       case "buyer":
-        return { label: "QUALIFIED ACQUIRER", tag: "Buyer", border: "border-teal-700 text-teal-900 bg-teal-50", icon: UserCheck };
+        return { label: "Acquirer", tag: "Buyer", badgeClass: "bg-emerald-50 text-emerald-700 border-emerald-200", icon: UserCheck };
       default:
-        return { label: "PUBLIC OBSERVER", tag: "Guest", border: "border-ivory-400 text-slate-800 bg-ivory-100", icon: Eye };
+        return { label: "Public Visitor", tag: "Guest", badgeClass: "bg-slate-100 text-slate-700 border-slate-200", icon: Eye };
     }
   };
 
@@ -63,112 +63,112 @@ export function RoleSwitcher() {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center gap-1.5 sm:gap-2 px-2.5 py-1.5 border text-xs transition-all duration-150 rounded-[2px] shadow-2xs hover:shadow-xs hover:bg-white focus-visible:outline-hidden ${currentBadge.border}`}
+        className={`flex items-center gap-2 px-3 py-1.5 border text-xs font-medium transition-all duration-150 rounded-lg shadow-xs hover:shadow-sm bg-white hover:bg-slate-50 ${currentBadge.badgeClass}`}
         title="Switch perspective between Buyer, Seller, Admin and Visitor"
       >
         <Icon className="w-3.5 h-3.5 flex-shrink-0" />
-        <span className="font-mono text-[10px] tracking-wider uppercase font-semibold hidden lg:inline">
-          {currentBadge.label}:
+        <span className="font-semibold hidden lg:inline">
+          {currentBadge.tag}:
         </span>
-        <span className="font-sans font-medium text-xs max-w-[80px] sm:max-w-[120px] truncate">
+        <span className="text-slate-800 font-medium max-w-[90px] sm:max-w-[130px] truncate">
           {currentUser.fullName}
         </span>
-        <ChevronDown className="w-3 h-3 opacity-60 flex-shrink-0" />
+        <ChevronDown className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-1 w-80 bg-white border border-ivory-400 shadow-xl z-50 p-3 text-slate-800 text-xs animate-in fade-in duration-100">
-          <div className="pb-2 mb-2 border-b border-ivory-300 flex items-center justify-between">
-            <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 font-bold">
-              Simulate Market Role
+        <div className="absolute right-0 mt-2 w-80 bg-white border border-slate-200/90 rounded-xl shadow-xl z-50 p-3 text-slate-800 text-xs animate-in fade-in duration-100">
+          <div className="pb-2.5 mb-2 border-b border-slate-100 flex items-center justify-between">
+            <span className="font-semibold text-xs text-slate-900">
+              Demo Persona Switcher
             </span>
-            <span className="font-mono text-[9px] text-teal-800 uppercase bg-teal-50 px-1.5 py-0.5 border border-teal-200">
-              Session Sandbox
+            <span className="text-[11px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full font-medium border border-emerald-100">
+              Interactive Mode
             </span>
           </div>
 
-          <div className="space-y-1.5">
+          <div className="space-y-1">
             {/* Buyer */}
             <button
               onClick={() => switchRole(SEED_USERS[2])}
-              className={`w-full flex items-start gap-2.5 p-2 text-left border transition ${
+              className={`w-full flex items-start gap-2.5 p-2 rounded-lg text-left transition ${
                 currentUser.role === "buyer"
-                  ? "bg-teal-50 border-teal-700 text-teal-950 font-medium"
-                  : "border-transparent hover:bg-ivory-100 hover:border-ivory-300"
+                  ? "bg-emerald-50 text-emerald-950 font-medium border border-emerald-200"
+                  : "hover:bg-slate-50 border border-transparent"
               }`}
             >
-              <UserCheck className="w-4 h-4 text-teal-700 mt-0.5 flex-shrink-0" />
+              <UserCheck className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
               <div>
                 <div className="flex items-center gap-1.5">
-                  <span className="font-bold text-xs">Vikram Patel</span>
-                  <span className="font-mono text-[9px] uppercase px-1 bg-teal-100 text-teal-900 font-semibold">
-                    Acquirer
+                  <span className="font-semibold text-xs text-slate-900">Vikram Patel</span>
+                  <span className="text-[10px] px-1.5 py-0.2 bg-emerald-100 text-emerald-800 rounded font-medium">
+                    Buyer
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-500 mt-0.5">VP Growth Investments Ltd (₹50 Cr ticket size)</p>
+                <p className="text-[11px] text-slate-500 mt-0.5">VP Growth Investments (₹50 Cr Budget)</p>
               </div>
             </button>
 
             {/* Seller */}
             <button
               onClick={() => switchRole(SEED_USERS[1])}
-              className={`w-full flex items-start gap-2.5 p-2 text-left border transition ${
+              className={`w-full flex items-start gap-2.5 p-2 rounded-lg text-left transition ${
                 currentUser.role === "seller"
-                  ? "bg-blue-50 border-blue-700 text-blue-950 font-medium"
-                  : "border-transparent hover:bg-ivory-100 hover:border-ivory-300"
+                  ? "bg-blue-50 text-blue-950 font-medium border border-blue-200"
+                  : "hover:bg-slate-50 border border-transparent"
               }`}
             >
-              <Briefcase className="w-4 h-4 text-blue-700 mt-0.5 flex-shrink-0" />
+              <Briefcase className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
               <div>
                 <div className="flex items-center gap-1.5">
-                  <span className="font-bold text-xs">Sunil Sharma</span>
-                  <span className="font-mono text-[9px] uppercase px-1 bg-blue-100 text-blue-900 font-semibold">
-                    Promoter
+                  <span className="font-semibold text-xs text-slate-900">Sunil Sharma</span>
+                  <span className="text-[10px] px-1.5 py-0.2 bg-blue-100 text-blue-800 rounded font-medium">
+                    Seller
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-500 mt-0.5">Shree Ganesh Precision Forgings LLP (Pune)</p>
+                <p className="text-[11px] text-slate-500 mt-0.5">Director, Precision Auto Forgings</p>
               </div>
             </button>
 
             {/* Admin */}
             <button
               onClick={() => switchRole(SEED_USERS[0])}
-              className={`w-full flex items-start gap-2.5 p-2 text-left border transition ${
+              className={`w-full flex items-start gap-2.5 p-2 rounded-lg text-left transition ${
                 currentUser.role === "admin"
-                  ? "bg-purple-50 border-purple-700 text-purple-950 font-medium"
-                  : "border-transparent hover:bg-ivory-100 hover:border-ivory-300"
+                  ? "bg-purple-50 text-purple-950 font-medium border border-purple-200"
+                  : "hover:bg-slate-50 border border-transparent"
               }`}
             >
-              <ShieldCheck className="w-4 h-4 text-purple-700 mt-0.5 flex-shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-purple-600 mt-0.5 flex-shrink-0" />
               <div>
                 <div className="flex items-center gap-1.5">
-                  <span className="font-bold text-xs">Aarav Deshmukh</span>
-                  <span className="font-mono text-[9px] uppercase px-1 bg-purple-100 text-purple-900 font-semibold">
-                    Compliance
+                  <span className="font-semibold text-xs text-slate-900">Aarav Deshmukh</span>
+                  <span className="text-[10px] px-1.5 py-0.2 bg-purple-100 text-purple-800 rounded font-medium">
+                    Admin
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-500 mt-0.5">Chief Compliance Officer & Listing Moderator</p>
+                <p className="text-[11px] text-slate-500 mt-0.5">Compliance & CA Panel Reviewer</p>
               </div>
             </button>
 
-            {/* Public Visitor */}
+            {/* Visitor */}
             <button
               onClick={setVisitor}
-              className={`w-full flex items-start gap-2.5 p-2 text-left border transition ${
+              className={`w-full flex items-start gap-2.5 p-2 rounded-lg text-left transition ${
                 currentUser.role === "visitor"
-                  ? "bg-ivory-200 border-slate-600 text-slate-900 font-medium"
-                  : "border-transparent hover:bg-ivory-100 hover:border-ivory-300"
+                  ? "bg-slate-100 text-slate-950 font-medium border border-slate-300"
+                  : "hover:bg-slate-50 border border-transparent"
               }`}
             >
-              <Eye className="w-4 h-4 text-slate-600 mt-0.5 flex-shrink-0" />
+              <Eye className="w-4 h-4 text-slate-500 mt-0.5 flex-shrink-0" />
               <div>
                 <div className="flex items-center gap-1.5">
-                  <span className="font-bold text-xs">Guest Observer</span>
-                  <span className="font-mono text-[9px] uppercase px-1 bg-slate-200 text-slate-800">
+                  <span className="font-semibold text-xs text-slate-900">Anonymous Visitor</span>
+                  <span className="text-[10px] px-1.5 py-0.2 bg-slate-200 text-slate-700 rounded font-medium">
                     Public
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-500 mt-0.5">Unregistered explorer (Standard blind listings)</p>
+                <p className="text-[11px] text-slate-500 mt-0.5">Unregistered prospective acquirer</p>
               </div>
             </button>
           </div>

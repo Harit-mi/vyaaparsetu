@@ -37,6 +37,7 @@ import {
   UserCheck,
   Building2,
   FileCheck,
+  ArrowRight,
 } from "lucide-react";
 
 export default function AdminPage() {
@@ -82,7 +83,7 @@ export default function AdminPage() {
       l.status = "published";
       l.isFinancialVerified = true;
       MarketplaceStorage.saveListing(l);
-      showToast("Mandate Approved & Published", `${l.displayTitle} is now live with CA verification seal.`);
+      showToast("Listing Approved & Published", `${l.displayTitle} is now live with CA verification badge.`);
     }
   };
 
@@ -91,7 +92,7 @@ export default function AdminPage() {
     if (l) {
       l.status = "rejected";
       MarketplaceStorage.saveListing(l);
-      showToast("Mandate Rejected", `${l.displayTitle} has been rejected from marketplace search.`, "error");
+      showToast("Listing Rejected", `${l.displayTitle} has been rejected from marketplace search.`, "error");
     }
   };
 
@@ -101,7 +102,7 @@ export default function AdminPage() {
       l.status = "withdrawn";
       l.isPaused = true;
       MarketplaceStorage.saveListing(l);
-      showToast("Stale Mandate Archived", `${l.displayTitle} marked as withdrawn due to promoter inactivity.`, "info");
+      showToast("Stale Listing Archived", `${l.displayTitle} marked as withdrawn.`, "info");
     }
   };
 
@@ -113,7 +114,7 @@ export default function AdminPage() {
       c.resolvedAt = new Date().toISOString();
       c.resolutionAction = "Seller verified with renewed compliance certificate; warning issued.";
       MarketplaceStorage.addComplaint(c);
-      showToast("Complaint Resolved", "Regulatory grievance record closed under IT Rules.");
+      showToast("Complaint Resolved", "Grievance record closed under platform guidelines.");
     }
   };
 
@@ -140,100 +141,103 @@ export default function AdminPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
-      {/* Editorial Masthead */}
-      <div className="border-b border-[#e2dfd6] pb-6 space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-3 text-[11px] font-mono uppercase tracking-wider text-slate-500">
+      {/* Header */}
+      <div className="border-b border-slate-200 pb-6 space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 bg-purple-700 inline-block" />
-            <span>COMPLIANCE & REGULATORY CONTROL DESK</span>
-            <span>&bull;</span>
-            <span className="text-navy-950 font-bold">CHIEF COMPLIANCE OFFICER</span>
+            <span className="w-2 h-2 rounded-full bg-indigo-600 inline-block" />
+            <span className="font-semibold text-slate-700">Compliance & Regulatory Control</span>
+            <span>•</span>
+            <span className="text-slate-500">Admin Authority</span>
           </div>
-          <span className="text-slate-400">AUDIT JURISDICTION: MCA21 &bull; IT RULES 2021</span>
+          <span className="inline-flex items-center gap-1.5 text-indigo-700 font-semibold bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200/80 text-xs">
+            <ShieldCheck className="w-3.5 h-3.5" />
+            Audit Jurisdiction Active
+          </span>
         </div>
 
         <div>
-          <h1 className="font-display text-3xl sm:text-4xl font-extrabold text-navy-950 tracking-tight">
-            Administrative & Moderation Console
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            Admin & Moderation Console
           </h1>
-          <p className="font-mono text-xs text-slate-500 mt-1">
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
             Institutional oversight, CA audit verification, stale-listing curation, deal attribution, and regulatory grievance records.
           </p>
         </div>
       </div>
 
-      {/* Top Level Metric Ledger */}
+      {/* Top Metric Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-4 bg-white border border-[#e2dfd6] space-y-1">
-          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block">
-            TOTAL ENTERPRISE VALUE
+        <div className="p-5 bg-white rounded-2xl border border-slate-200/90 shadow-card space-y-1">
+          <span className="text-xs uppercase tracking-wider text-slate-400 font-semibold block">
+            Total Deal Value
           </span>
-          <span className="font-mono text-2xl font-extrabold text-navy-950 block tabular-nums">
+          <span className="text-2xl sm:text-3xl font-extrabold text-slate-900 block">
             {formatINR(totalListedValue)}
           </span>
-          <span className="font-mono text-[10px] text-teal-800 font-semibold uppercase block">
-            {listings.length} ACTIVE MANDATES
+          <span className="text-xs text-emerald-600 font-medium block">
+            {listings.length} Active Listings
           </span>
         </div>
 
-        <div className="p-4 bg-white border border-[#e2dfd6] space-y-1">
-          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block">
-            PENDING MODERATION QUEUE
+        <div className="p-5 bg-white rounded-2xl border border-slate-200/90 shadow-card space-y-1">
+          <span className="text-xs uppercase tracking-wider text-slate-400 font-semibold block">
+            Pending Queue
           </span>
-          <span className="font-mono text-2xl font-extrabold text-amber-800 block tabular-nums">
-            {pendingApprovals.length} MANDATES
+          <span className="text-2xl sm:text-3xl font-extrabold text-amber-600 block">
+            {pendingApprovals.length} Listings
           </span>
-          <span className="font-mono text-[10px] text-slate-500 uppercase block">
-            REQUIRES CA / MCA CHECK
+          <span className="text-xs text-slate-500 font-medium block">
+            Requires Verification Check
           </span>
         </div>
 
-        <div className="p-4 bg-white border border-[#e2dfd6] space-y-1">
-          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block">
-            COMMISSION IN PIPELINE
+        <div className="p-5 bg-white rounded-2xl border border-slate-200/90 shadow-card space-y-1">
+          <span className="text-xs uppercase tracking-wider text-slate-400 font-semibold block">
+            Commission Pipeline
           </span>
-          <span className="font-mono text-2xl font-extrabold text-teal-800 block tabular-nums">
+          <span className="text-2xl sm:text-3xl font-extrabold text-blue-600 block">
             {formatINR(totalCommissionPipeline)}
           </span>
-          <span className="font-mono text-[10px] text-slate-500 uppercase block">
-            180-DAY ATTRIBUTION CYCLE
+          <span className="text-xs text-slate-500 font-medium block">
+            180-Day Attribution Cycle
           </span>
         </div>
 
-        <div className="p-4 bg-white border border-[#e2dfd6] space-y-1">
-          <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 block">
-            REGULATORY COMPLAINTS
+        <div className="p-5 bg-white rounded-2xl border border-slate-200/90 shadow-card space-y-1">
+          <span className="text-xs uppercase tracking-wider text-slate-400 font-semibold block">
+            Open Grievances
           </span>
-          <span className="font-mono text-2xl font-extrabold text-red-800 block tabular-nums">
-            {openComplaints.length} OPEN
+          <span className="text-2xl sm:text-3xl font-extrabold text-rose-600 block">
+            {openComplaints.length} Open
           </span>
-          <span className="font-mono text-[10px] text-slate-500 uppercase block">
-            RULE 3(2) IT ACT GRIEVANCES
+          <span className="text-xs text-slate-500 font-medium block">
+            User Compliance Reports
           </span>
         </div>
       </div>
 
       {/* Navigation Tabs */}
-      <div className="flex items-center gap-1 border-b border-[#e2dfd6] overflow-x-auto bg-[#f5f4ef] p-1">
+      <div className="flex items-center gap-1.5 overflow-x-auto bg-slate-100/80 p-1.5 rounded-xl border border-slate-200/70">
         {[
-          { key: "overview", label: "EXECUTIVE OVERVIEW" },
-          { key: "listings_queue", label: `MODERATION QUEUE (${pendingApprovals.length})` },
-          { key: "duplicate_stale", label: `STALE LISTINGS (${staleListings.length})` },
-          { key: "users", label: `ENTITY DIRECTORY (${users.length})` },
-          { key: "deals_attribution", label: `DEAL ATTRIBUTION (${deals.length})` },
-          { key: "complaints", label: `DISPUTES & GRIEVANCES (${openComplaints.length})` },
-          { key: "fees_invoices", label: "COMMISSION & INVOICES" },
-          { key: "audit_trail", label: `AUDIT TRAIL (${auditLogs.length})` },
+          { key: "overview", label: "Executive Overview" },
+          { key: "listings_queue", label: `Moderation Queue (${pendingApprovals.length})` },
+          { key: "duplicate_stale", label: `Stale Listings (${staleListings.length})` },
+          { key: "users", label: `Users (${users.length})` },
+          { key: "deals_attribution", label: `Attribution (${deals.length})` },
+          { key: "complaints", label: `Grievances (${openComplaints.length})` },
+          { key: "fees_invoices", label: "Commission & Invoices" },
+          { key: "audit_trail", label: `Audit Log (${auditLogs.length})` },
         ].map((tab) => {
           const isActive = activeTab === tab.key;
           return (
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key as any)}
-              className={`px-4 py-2.5 font-mono text-xs font-bold transition uppercase tracking-wider whitespace-nowrap border ${
+              className={`px-3.5 py-2 rounded-lg text-xs font-semibold transition whitespace-nowrap ${
                 isActive
-                  ? "bg-white text-navy-950 border-[#e2dfd6] border-b-transparent shadow-xs"
-                  : "bg-transparent text-slate-600 border-transparent hover:text-navy-950 hover:bg-white/60"
+                  ? "bg-white text-slate-900 shadow-sm"
+                  : "text-slate-600 hover:text-slate-900 hover:bg-white/50"
               }`}
             >
               {tab.label}
@@ -246,26 +250,26 @@ export default function AdminPage() {
       {activeTab === "overview" && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 text-xs">
           {/* Recent Introductions */}
-          <div className="bg-white p-6 border border-[#e2dfd6] space-y-4">
-            <div className="border-b border-[#e2dfd6] pb-2">
-              <h3 className="font-display font-bold text-navy-950 text-sm flex items-center gap-2">
-                <Users className="w-4 h-4 text-teal-700" />
-                RECENT BUYER-SELLER INTRODUCTIONS & ENQUIRIES
+          <div className="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-card space-y-4">
+            <div className="border-b border-slate-100 pb-3">
+              <h3 className="font-bold text-slate-900 text-sm flex items-center gap-2">
+                <Users className="w-4 h-4 text-blue-600" />
+                Recent Buyer-Seller Introductions
               </h3>
-              <p className="text-[11px] text-slate-500 font-mono mt-0.5">
-                Time-stamped initial commercial contact logs.
+              <p className="text-xs text-slate-500 mt-0.5">
+                Time-stamped commercial contact logs.
               </p>
             </div>
-            <div className="divide-y divide-[#e2dfd6]">
+            <div className="divide-y divide-slate-100">
               {inquiries.slice(0, 4).map((inq) => (
                 <div key={inq.id} className="py-3 flex items-center justify-between">
                   <div className="space-y-0.5">
-                    <span className="font-display font-bold text-navy-950 block">{inq.buyerName}</span>
-                    <span className="font-mono text-[11px] text-slate-500 truncate max-w-xs block">
-                      TARGET: {inq.listingTitle}
+                    <span className="font-semibold text-slate-900 block">{inq.buyerName}</span>
+                    <span className="text-xs text-slate-500 truncate max-w-xs block">
+                      Target: {inq.listingTitle}
                     </span>
                   </div>
-                  <span className="font-mono text-[10px] font-bold text-teal-800 bg-teal-50 border border-teal-200 px-2 py-0.5 uppercase">
+                  <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full capitalize">
                     {inq.status.replace(/_/g, " ")}
                   </span>
                 </div>
@@ -274,31 +278,31 @@ export default function AdminPage() {
           </div>
 
           {/* Verification Operations */}
-          <div className="bg-white p-6 border border-[#e2dfd6] space-y-4">
-            <div className="border-b border-[#e2dfd6] pb-2">
-              <h3 className="font-display font-bold text-navy-950 text-sm flex items-center gap-2">
-                <ShieldAlert className="w-4 h-4 text-purple-700" />
-                CHARTERED ACCOUNTANT & MCA VERIFICATION DESK
+          <div className="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-card space-y-4">
+            <div className="border-b border-slate-100 pb-3">
+              <h3 className="font-bold text-slate-900 text-sm flex items-center gap-2">
+                <ShieldAlert className="w-4 h-4 text-indigo-600" />
+                Chartered Accountant & MCA Desk
               </h3>
-              <p className="text-[11px] text-slate-500 font-mono mt-0.5">
-                Statutory validation protocols across MCA21, GSTIN, and Form 3CD audits.
+              <p className="text-xs text-slate-500 mt-0.5">
+                Validation protocols across MCA21, GSTIN, and Form 3CD audits.
               </p>
             </div>
-            <p className="text-slate-600 leading-relaxed text-xs font-sans">
-              Every promoter claiming &lsquo;CA Verified Financials&rsquo; is cross-checked against MCA21 director master records, GST e-invoice logs, and Form 3CD tax audit reports before publishing.
+            <p className="text-slate-600 leading-relaxed text-xs">
+              Every promoter claiming &lsquo;CA Verified Financials&rsquo; is cross-checked against MCA21 director records, GST e-invoice logs, and Form 3CD tax audit reports before publishing.
             </p>
-            <div className="p-4 bg-[#fbfbf9] border border-[#e2dfd6] space-y-2 font-mono text-xs">
-              <div className="flex justify-between font-semibold text-navy-950">
-                <span>VERIFICATION CERTIFICATION RATIO:</span>
-                <span className="text-teal-800 font-bold">83.3% CERTIFIED</span>
+            <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2 text-xs">
+              <div className="flex justify-between font-semibold text-slate-900">
+                <span>Verification Certification Ratio:</span>
+                <span className="text-emerald-700 font-bold">83.3% Certified</span>
               </div>
-              <div className="flex justify-between text-slate-600 text-[11px]">
-                <span>MCA DIRECTOR CIN MATCH:</span>
-                <span className="font-bold text-navy-950">100% PASS</span>
+              <div className="flex justify-between text-slate-600 text-xs">
+                <span>Director DIN Match:</span>
+                <span className="font-semibold text-slate-900">100% Pass</span>
               </div>
-              <div className="flex justify-between text-slate-600 text-[11px]">
-                <span>GST RETURN 3B FILING ACTIVE:</span>
-                <span className="font-bold text-navy-950">94.1% COMPLIANT</span>
+              <div className="flex justify-between text-slate-600 text-xs">
+                <span>GST Return 3B Filing Active:</span>
+                <span className="font-semibold text-slate-900">94.1% Compliant</span>
               </div>
             </div>
           </div>
@@ -308,38 +312,38 @@ export default function AdminPage() {
       {/* TAB 2: LISTINGS APPROVAL QUEUE */}
       {activeTab === "listings_queue" && (
         <div className="space-y-4">
-          <div className="border border-[#e2dfd6] bg-white divide-y divide-[#e2dfd6]">
-            <div className="p-4 bg-[#fbfbf9] flex items-center justify-between text-xs font-mono uppercase tracking-wider text-slate-500">
-              <span>MANDATE MODERATION & CA AUDIT QUEUE</span>
-              <span>{listings.length} LISTINGS TOTAL</span>
+          <div className="bg-white rounded-2xl border border-slate-200/90 shadow-card divide-y divide-slate-100 overflow-hidden">
+            <div className="p-4 bg-slate-50 flex items-center justify-between text-xs font-semibold text-slate-500 uppercase tracking-wider">
+              <span>Listing Moderation & Verification Queue</span>
+              <span>{listings.length} Listings Total</span>
             </div>
 
             {listings.map((l) => (
               <div key={l.id} className="p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-6 text-xs">
                 <div className="space-y-2 max-w-2xl">
-                  <div className="flex items-center gap-2 font-mono text-[10px]">
+                  <div className="flex items-center gap-2 text-xs">
                     <span
-                      className={`font-bold uppercase tracking-wider px-2 py-0.5 border ${
+                      className={`font-semibold px-2.5 py-0.5 rounded-full capitalize ${
                         l.status === "published"
-                          ? "bg-teal-50 text-teal-800 border-teal-300"
+                          ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
                           : l.status === "rejected"
-                          ? "bg-red-50 text-red-800 border-red-300"
-                          : "bg-amber-50 text-amber-800 border-amber-300"
+                          ? "bg-rose-50 text-rose-700 border border-rose-200"
+                          : "bg-amber-50 text-amber-700 border border-amber-200"
                       }`}
                     >
-                      STATUS: {l.status}
+                      {l.status}
                     </span>
-                    <span className="text-navy-950 font-semibold">{l.industry}</span>
-                    <span className="text-slate-400">&bull;</span>
+                    <span className="text-slate-800 font-medium">{l.industry}</span>
+                    <span className="text-slate-300">•</span>
                     <span className="text-slate-500">{l.city}, {l.state}</span>
                   </div>
 
-                  <h4 className="font-display font-bold text-navy-950 text-base">{l.displayTitle}</h4>
-                  <div className="font-mono text-xs text-slate-500">
-                    LEGAL ENTITY: <span className="text-navy-950 font-semibold">{l.businessName}</span> &bull; VALUATION:{" "}
-                    <span className="font-bold text-teal-800 tabular-nums">{formatINR(l.askingPrice)}</span>
+                  <h4 className="font-bold text-slate-900 text-base">{l.displayTitle}</h4>
+                  <div className="text-xs text-slate-500">
+                    Legal Entity: <span className="text-slate-900 font-medium">{l.businessName}</span> • Valuation:{" "}
+                    <span className="font-bold text-slate-900">{formatINR(l.askingPrice)}</span>
                   </div>
-                  <p className="text-[11px] text-slate-600 font-serif italic pt-1">
+                  <p className="text-xs text-slate-500 pt-1">
                     Audit Note: {l.financialVerificationNote || "Standard statutory filing verification complete."}
                   </p>
                 </div>
@@ -348,9 +352,9 @@ export default function AdminPage() {
                   {l.status !== "published" && (
                     <button
                       onClick={() => handleApproveListing(l.id)}
-                      className="btn-teal btn-sm"
+                      className="btn-brand btn-sm"
                     >
-                      APPROVE & VERIFY
+                      Approve & Verify
                     </button>
                   )}
                   {l.status !== "rejected" && (
@@ -358,7 +362,7 @@ export default function AdminPage() {
                       onClick={() => handleRejectListing(l.id)}
                       className="btn-danger btn-sm"
                     >
-                      REJECT
+                      Reject
                     </button>
                   )}
                 </div>
@@ -371,32 +375,32 @@ export default function AdminPage() {
       {/* TAB 3: DUPLICATE & STALE LISTING HANDLING */}
       {activeTab === "duplicate_stale" && (
         <div className="space-y-6 text-xs">
-          <div className="bg-white p-6 border border-[#e2dfd6] space-y-4">
-            <div className="border-b border-[#e2dfd6] pb-2">
-              <h3 className="font-display font-bold text-navy-950 text-sm">
-                STALE & LOW-VELOCITY LISTINGS REVIEW
+          <div className="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-card space-y-4">
+            <div className="border-b border-slate-100 pb-3">
+              <h3 className="font-bold text-slate-900 text-sm">
+                Stale & Inactive Listings Review
               </h3>
-              <p className="text-slate-500 text-xs font-mono mt-0.5">
-                Listings with low enquiry velocity or zero promoter activity for over 60 days can be archived to preserve marketplace quality.
+              <p className="text-slate-500 text-xs mt-0.5">
+                Listings with low inquiry velocity or zero promoter activity for over 60 days can be archived to maintain marketplace quality.
               </p>
             </div>
 
-            <div className="border border-[#e2dfd6] divide-y divide-[#e2dfd6]">
+            <div className="divide-y divide-slate-100">
               {staleListings.map((l) => (
-                <div key={l.id} className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div key={l.id} className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div className="space-y-0.5">
-                    <span className="font-display font-bold text-navy-950 block text-sm">{l.displayTitle}</span>
-                    <span className="font-mono text-[11px] text-slate-500">
-                      ENQUIRIES: {l.inquiriesCount} &bull; VIEWS: {l.viewsCount} &bull; RECORDED {formatDate(l.createdAt)}
+                    <span className="font-bold text-slate-900 block text-sm">{l.displayTitle}</span>
+                    <span className="text-xs text-slate-500">
+                      Inquiries: {l.inquiriesCount} • Views: {l.viewsCount} • Listed {formatDate(l.createdAt)}
                     </span>
                   </div>
 
                   <button
                     onClick={() => handleArchiveStale(l.id)}
-                    className="btn-secondary btn-sm"
+                    className="btn-secondary btn-sm inline-flex items-center gap-1.5"
                   >
-                    <Archive className="w-3.5 h-3.5 text-slate-600" />
-                    <span>ARCHIVE MANDATE</span>
+                    <Archive className="w-3.5 h-3.5 text-slate-500" />
+                    <span>Archive Mandate</span>
                   </button>
                 </div>
               ))}
@@ -408,27 +412,27 @@ export default function AdminPage() {
       {/* TAB 4: USER MANAGEMENT */}
       {activeTab === "users" && (
         <div className="space-y-4 text-xs">
-          <div className="bg-white border border-[#e2dfd6] divide-y divide-[#e2dfd6]">
-            <div className="p-4 bg-[#fbfbf9] font-mono font-bold text-slate-500 uppercase tracking-wider text-[11px]">
-              PLATFORM REGISTERED ENTITIES & VERIFICATION SEALS [{users.length}]
+          <div className="bg-white rounded-2xl border border-slate-200/90 shadow-card divide-y divide-slate-100 overflow-hidden">
+            <div className="p-4 bg-slate-50 font-semibold text-slate-500 uppercase tracking-wider text-xs">
+              Registered Platform Users ({users.length})
             </div>
             {users.map((u) => (
               <div key={u.id} className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="font-display font-bold text-navy-950 text-sm">{u.fullName}</span>
-                    <span className="font-mono text-[10px] bg-[#f5f4ef] text-navy-950 font-bold px-2 py-0.5 border border-[#e2dfd6] uppercase">
-                      ROLE: {u.role}
+                    <span className="font-bold text-slate-900 text-sm">{u.fullName}</span>
+                    <span className="text-xs bg-slate-100 text-slate-700 font-semibold px-2 py-0.5 rounded-full capitalize">
+                      {u.role}
                     </span>
                   </div>
-                  <p className="font-mono text-xs text-slate-500">{u.email} &bull; {u.phone}</p>
-                  <p className="text-xs text-slate-700 font-sans">{u.companyName} &bull; {u.city}, {u.state}</p>
+                  <p className="text-xs text-slate-500">{u.email} • {u.phone}</p>
+                  <p className="text-xs text-slate-700">{u.companyName} • {u.city}, {u.state}</p>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="inline-flex items-center gap-1.5 font-mono text-[11px] font-semibold text-teal-800 bg-teal-50 px-3 py-1.5 border border-teal-200">
-                    <ShieldCheck className="w-3.5 h-3.5 text-teal-700" />
-                    <span>MCA KYC VERIFIED</span>
+                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                    <span>KYC Verified</span>
                   </span>
                 </div>
               </div>
@@ -440,46 +444,46 @@ export default function AdminPage() {
       {/* TAB 5: DEALS & ATTRIBUTION */}
       {activeTab === "deals_attribution" && (
         <div className="space-y-4">
-          <div className="bg-white border border-[#e2dfd6] divide-y divide-[#e2dfd6] text-xs">
+          <div className="bg-white rounded-2xl border border-slate-200/90 shadow-card divide-y divide-slate-100 overflow-hidden text-xs">
             {deals.map((d) => (
               <div key={d.id} className="p-6 space-y-4">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="space-y-0.5">
-                    <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                      DEAL RECORD REF #{d.id}
+                    <span className="text-xs font-semibold text-slate-400 block">
+                      Deal Ref #{d.id}
                     </span>
-                    <h4 className="font-display font-bold text-navy-950 text-base">{d.listingTitle}</h4>
+                    <h4 className="font-bold text-slate-900 text-base">{d.listingTitle}</h4>
                   </div>
-                  <span className="font-mono text-xs font-bold px-3 py-1 bg-navy-950 text-white uppercase tracking-wider">
-                    STAGE: {d.currentStage.replace(/_/g, " ").toUpperCase()}
+                  <span className="text-xs font-semibold px-3 py-1 bg-slate-900 text-white rounded-full capitalize">
+                    {d.currentStage.replace(/_/g, " ")}
                   </span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 bg-[#fbfbf9] p-4 border border-[#e2dfd6] font-mono">
+                <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 bg-slate-50 rounded-xl p-4 border border-slate-200 text-xs">
                   <div>
-                    <span className="text-[10px] text-slate-400 font-bold uppercase block">SELLER LEGAL NAME</span>
-                    <span className="block font-bold text-navy-950 mt-0.5">{d.sellerName}</span>
+                    <span className="text-slate-400 font-semibold block uppercase text-[11px]">Seller Name</span>
+                    <span className="block font-bold text-slate-900 mt-0.5">{d.sellerName}</span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-slate-400 font-bold uppercase block">BUYER LEGAL NAME</span>
-                    <span className="block font-bold text-navy-950 mt-0.5">{d.buyerName}</span>
+                    <span className="text-slate-400 font-semibold block uppercase text-[11px]">Buyer Name</span>
+                    <span className="block font-bold text-slate-900 mt-0.5">{d.buyerName}</span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-slate-400 font-bold uppercase block">ATTRIBUTION EXPIRES</span>
-                    <span className="block font-bold text-amber-800 mt-0.5">
+                    <span className="text-slate-400 font-semibold block uppercase text-[11px]">Attribution Expires</span>
+                    <span className="block font-bold text-amber-700 mt-0.5">
                       {formatDate(d.platformAttributionWindowEnds)}
                     </span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-slate-400 font-bold uppercase block">SUCCESS FEE (2%)</span>
-                    <span className="block font-bold text-teal-800 mt-0.5 tabular-nums">
-                      {formatINR(d.expectedCommission)} <span className="text-[10px] text-slate-400 font-normal">+18% GST</span>
+                    <span className="text-slate-400 font-semibold block uppercase text-[11px]">Success Fee (2%)</span>
+                    <span className="block font-bold text-emerald-700 mt-0.5">
+                      {formatINR(d.expectedCommission)} <span className="text-xs text-slate-400 font-normal">+18% GST</span>
                     </span>
                   </div>
                 </div>
 
-                <div className="font-mono text-[11px] text-slate-500">
-                  Initial introduction recorded on {formatDate(d.firstContactDate)}. Commission covenant schedule v{d.commissionAgreementVersion}.
+                <div className="text-xs text-slate-500">
+                  Initial introduction recorded on {formatDate(d.firstContactDate)}. Commission agreement v{d.commissionAgreementVersion}.
                 </div>
               </div>
             ))}
@@ -490,35 +494,35 @@ export default function AdminPage() {
       {/* TAB 6: COMPLAINTS & GRIEVANCES */}
       {activeTab === "complaints" && (
         <div className="space-y-4">
-          <div className="bg-white border border-[#e2dfd6] divide-y divide-[#e2dfd6] text-xs">
+          <div className="bg-white rounded-2xl border border-slate-200/90 shadow-card divide-y divide-slate-100 overflow-hidden text-xs">
             {complaints.map((cmp) => (
               <div key={cmp.id} className="p-6 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-red-800 font-mono font-bold bg-red-50 border border-red-200 px-2.5 py-0.5 text-[10px] uppercase tracking-wider">
-                    REASON: {cmp.reason.replace(/_/g, " ")}
+                  <span className="text-rose-700 font-semibold bg-rose-50 border border-rose-200 px-2.5 py-0.5 rounded-full text-xs capitalize">
+                    {cmp.reason.replace(/_/g, " ")}
                   </span>
                   <span
-                    className={`font-mono font-bold px-2.5 py-0.5 border text-[10px] uppercase tracking-wider ${
+                    className={`font-semibold px-2.5 py-0.5 rounded-full text-xs capitalize ${
                       cmp.status === "resolved"
-                        ? "bg-teal-50 text-teal-800 border-teal-200"
-                        : "bg-amber-50 text-amber-800 border-amber-200"
+                        ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                        : "bg-amber-50 text-amber-700 border border-amber-200"
                     }`}
                   >
-                    STATUS: {cmp.status}
+                    {cmp.status}
                   </span>
                 </div>
 
                 <div className="space-y-1">
-                  <h4 className="font-display font-bold text-navy-950 text-base">TARGET: {cmp.targetTitle}</h4>
-                  <p className="text-slate-700 font-sans">{cmp.details}</p>
+                  <h4 className="font-bold text-slate-900 text-base">Target: {cmp.targetTitle}</h4>
+                  <p className="text-slate-700 text-xs">{cmp.details}</p>
                   {cmp.evidenceNotes && (
-                    <p className="text-[11px] text-slate-500 font-serif italic pt-1">
+                    <p className="text-xs text-slate-500 pt-1">
                       Evidence submitted: {cmp.evidenceNotes}
                     </p>
                   )}
                   {cmp.resolutionAction && (
-                    <div className="mt-2 p-3 bg-teal-50/70 border border-teal-200 text-teal-950 font-mono text-xs">
-                      ACTION LOGGED: {cmp.resolutionAction}
+                    <div className="mt-2 p-3 bg-emerald-50 rounded-lg border border-emerald-200 text-emerald-900 text-xs">
+                      Action Logged: {cmp.resolutionAction}
                     </div>
                   )}
                 </div>
@@ -527,9 +531,9 @@ export default function AdminPage() {
                   <div className="flex justify-end pt-2">
                     <button
                       onClick={() => handleResolveComplaint(cmp.id)}
-                      className="btn-primary btn-sm"
+                      className="btn-brand btn-sm"
                     >
-                      RECORD RESOLUTION & CLOSE GRIEVANCE
+                      Resolve & Close Grievance
                     </button>
                   </div>
                 )}
@@ -543,19 +547,19 @@ export default function AdminPage() {
       {activeTab === "fees_invoices" && (
         <div className="space-y-6 text-xs">
           {/* Configurable Commission Section */}
-          <div className="bg-white p-6 border border-[#e2dfd6] space-y-4">
-            <div className="border-b border-[#e2dfd6] pb-2">
-              <h3 className="font-display font-bold text-navy-950 text-sm flex items-center gap-2">
-                <Scale className="w-4 h-4 text-teal-700" />
-                CONFIGURE PLATFORM COMMISSION SCHEDULE
+          <div className="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-card space-y-4">
+            <div className="border-b border-slate-100 pb-3">
+              <h3 className="font-bold text-slate-900 text-sm flex items-center gap-2">
+                <Scale className="w-4 h-4 text-blue-600" />
+                Configure Platform Commission Schedule
               </h3>
-              <p className="text-[11px] text-slate-500 font-mono mt-0.5">
+              <p className="text-xs text-slate-500 mt-0.5">
                 Statutory transaction success fee rate and attribution window policy.
               </p>
             </div>
-            <form onSubmit={handleSaveCommissionConfig} className="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono">
+            <form onSubmit={handleSaveCommissionConfig} className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
-                <label className="block text-[10px] uppercase tracking-wider text-slate-700 mb-1 font-bold">
+                <label className="block text-xs font-semibold text-slate-700 mb-1.5">
                   Standard Success Fee (%)
                 </label>
                 <input
@@ -563,54 +567,54 @@ export default function AdminPage() {
                   step="0.1"
                   value={editRate}
                   onChange={(e) => setEditRate(Number(e.target.value))}
-                  className="w-full p-2 border border-[#e2dfd6] bg-[#fbfbf9] text-navy-950 font-mono text-xs focus:ring-1 focus:ring-navy-950 focus:outline-hidden"
+                  className="w-full p-2.5 border border-slate-300 rounded-lg bg-white text-slate-900 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-hidden"
                 />
               </div>
 
               <div>
-                <label className="block text-[10px] uppercase tracking-wider text-slate-700 mb-1 font-bold">
+                <label className="block text-xs font-semibold text-slate-700 mb-1.5">
                   Attribution Window (Days)
                 </label>
                 <input
                   type="number"
                   value={editWindow}
                   onChange={(e) => setEditWindow(Number(e.target.value))}
-                  className="w-full p-2 border border-[#e2dfd6] bg-[#fbfbf9] text-navy-950 font-mono text-xs focus:ring-1 focus:ring-navy-950 focus:outline-hidden"
+                  className="w-full p-2.5 border border-slate-300 rounded-lg bg-white text-slate-900 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-hidden"
                 />
               </div>
 
               <div className="flex items-end">
                 <button
                   type="submit"
-                  className="btn-primary w-full"
+                  className="btn-brand w-full"
                 >
-                  SAVE POLICY CONFIGURATION
+                  Save Policy Configuration
                 </button>
               </div>
             </form>
           </div>
 
           {/* Invoices List */}
-          <div className="bg-white p-6 border border-[#e2dfd6] space-y-3">
-            <div className="border-b border-[#e2dfd6] pb-2">
-              <h3 className="font-display font-bold text-navy-950 text-sm">ISSUED STATUTORY PLATFORM INVOICES</h3>
-              <p className="text-[11px] text-slate-500 font-mono mt-0.5">
+          <div className="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-card space-y-3">
+            <div className="border-b border-slate-100 pb-3">
+              <h3 className="font-bold text-slate-900 text-sm">Issued Platform Invoices</h3>
+              <p className="text-xs text-slate-500 mt-0.5">
                 GST-compliant tax invoices issued upon closing.
               </p>
             </div>
-            <div className="divide-y divide-[#e2dfd6] font-mono">
+            <div className="divide-y divide-slate-100">
               {invoices.map((inv) => (
                 <div key={inv.id} className="py-3 flex items-center justify-between">
                   <div>
-                    <span className="font-bold text-navy-950 block text-xs">{inv.invoiceNumber}</span>
-                    <span className="text-[11px] text-slate-500">PARTY: {inv.userName.toUpperCase()}</span>
+                    <span className="font-bold text-slate-900 block text-xs">{inv.invoiceNumber}</span>
+                    <span className="text-xs text-slate-500">Party: {inv.userName}</span>
                   </div>
                   <div className="text-right">
-                    <span className="font-bold text-navy-950 block text-xs tabular-nums">
+                    <span className="font-bold text-slate-900 block text-xs">
                       {formatINR(inv.totalAmount)}
                     </span>
-                    <span className="text-[10px] text-teal-800 font-bold uppercase tracking-wider">
-                      STATUS: {inv.status}
+                    <span className="text-xs text-emerald-700 font-semibold capitalize">
+                      {inv.status}
                     </span>
                   </div>
                 </div>
@@ -623,25 +627,25 @@ export default function AdminPage() {
       {/* TAB 8: AUDIT TRAIL */}
       {activeTab === "audit_trail" && (
         <div className="space-y-4">
-          <div className="bg-white border border-[#e2dfd6] divide-y divide-[#e2dfd6] text-xs">
-            <div className="p-4 bg-[#fbfbf9] font-mono font-bold text-slate-500 uppercase tracking-wider text-[11px]">
-              STATUTORY AUDIT LOG & COMPLIANCE RECORDS [{auditLogs.length}]
+          <div className="bg-white rounded-2xl border border-slate-200/90 shadow-card divide-y divide-slate-100 overflow-hidden text-xs">
+            <div className="p-4 bg-slate-50 font-semibold text-slate-500 uppercase tracking-wider text-xs">
+              Platform Audit Log & Activity ({auditLogs.length})
             </div>
             {auditLogs.map((log) => (
               <div key={log.id} className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div className="space-y-1">
-                  <div className="flex items-center gap-2 font-mono text-[10px]">
-                    <span className="font-bold text-purple-900 bg-purple-50 border border-purple-200 px-2 py-0.5 uppercase tracking-wider">
-                      ACTION: {log.action}
+                  <div className="flex items-center gap-2 text-xs">
+                    <span className="font-semibold text-indigo-700 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-full capitalize">
+                      {log.action}
                     </span>
                     <span className="text-slate-400">IP: {log.ipAddress}</span>
                   </div>
-                  <p className="text-navy-950 font-medium font-sans">{log.details}</p>
-                  <span className="font-mono text-[10px] text-slate-400 uppercase">
-                    ACTOR: {log.actorName} ({log.actorRole})
+                  <p className="text-slate-900 font-medium">{log.details}</p>
+                  <span className="text-xs text-slate-400">
+                    Actor: {log.actorName} ({log.actorRole})
                   </span>
                 </div>
-                <span className="text-[10px] text-slate-400 font-mono whitespace-nowrap tabular-nums">
+                <span className="text-xs text-slate-400 whitespace-nowrap">
                   {new Date(log.timestamp).toLocaleString("en-IN")}
                 </span>
               </div>

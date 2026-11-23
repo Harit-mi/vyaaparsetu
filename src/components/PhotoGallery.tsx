@@ -42,7 +42,7 @@ export function PhotoGallery({
   return (
     <div className="space-y-3">
       {/* Main Image Frame */}
-      <div className="relative h-72 sm:h-96 w-full rounded-[2px] overflow-hidden bg-slate-900 border border-slate-200 shadow-xs group">
+      <div className="relative h-72 sm:h-96 w-full rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 shadow-card group">
         <CategoryPlaceholder
           industry={industry}
           subCategory={subCategory}

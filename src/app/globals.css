@@ -1,170 +1,124 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --canvas-bg: #fbfbf9;
+  --canvas-bg: #f8fafc;
   --surface-paper: #ffffff;
-  --surface-muted: #f5f4ef;
-  --surface-border: #e2dfd6;
-  --surface-border-strong: #d0cbc0;
+  --surface-card: #ffffff;
+  --surface-border: #e2e8f0;
   
-  --ink-primary: #0c152b;
-  --ink-secondary: #334155;
+  --ink-primary: #0f172a;
+  --ink-secondary: #475569;
   --ink-muted: #64748b;
   --ink-subtle: #94a3b8;
   
-  --accent-teal: #0a6355;
-  --accent-teal-dark: #06473d;
-  --accent-teal-light: #e6f5f2;
-  
-  --accent-bronze: #9c8353;
-  --accent-bronze-dark: #7a643a;
-  --accent-bronze-light: #f7f3ea;
-
-  --btn-primary-bg: #0c152b;
-  --btn-primary-hover: #142343;
-  --btn-teal-bg: #0a6355;
-  --btn-teal-hover: #084c41;
+  --brand-blue: #2563eb;
+  --brand-blue-hover: #1d4ed8;
+  --brand-emerald: #059669;
 }
 
 body {
   color: var(--ink-primary);
   background-color: var(--canvas-bg);
-  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
-/* ========================================================
-   TYPOGRAPHY SYSTEM — BUSINESS MARKETPLACE DIRECTION
-   Headlines: Libre Baskerville (Analytical, Confident, Editorial)
-   Body / UI: IBM Plex Sans (High Clarity, Dense, Technical)
-   Metrics & Ledger: IBM Plex Mono (Tabular, Strict Alignment)
-   ======================================================== */
-h1, h2, h3, h4, .font-display, .font-serif-editorial, .font-serif {
-  font-family: 'Libre Baskerville', Georgia, 'Times New Roman', serif;
-  font-feature-settings: 'lnum' 1, 'kern' 1;
+/* Headings: Clean, modern, high-contrast sans-serif */
+h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  letter-spacing: -0.025em;
+  font-weight: 700;
+  color: #0f172a;
 }
 
 h1 {
-  letter-spacing: -0.02em;
-  line-height: 1.18;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
 }
 
 h2 {
-  letter-spacing: -0.015em;
+  letter-spacing: -0.025em;
   line-height: 1.25;
 }
 
 h3 {
-  letter-spacing: -0.01em;
-  line-height: 1.32;
+  letter-spacing: -0.02em;
+  line-height: 1.35;
 }
 
-h4 {
-  letter-spacing: -0.005em;
-  line-height: 1.38;
+.font-serif-editorial {
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
-.font-sans {
-  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-}
-
-.font-mono, .font-tabular {
-  font-family: 'IBM Plex Mono', 'SFMono-Regular', Menlo, Monaco, Consolas, monospace;
-  font-feature-settings: 'tnum' 1, 'zero' 1, 'lnum' 1;
-  font-variant-numeric: tabular-nums lining-nums;
-}
-
-/* Editorial Kicker (Header Meta Tag) */
-.text-kicker {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10.5px;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  font-weight: 600;
-  color: #64748b;
-}
-
-/* Editorial Hairline Dividers */
-.border-editorial {
-  border-color: #e2dfd6;
-}
-
-.divide-editorial > :not([hidden]) ~ :not([hidden]) {
-  border-color: #e2dfd6;
-}
-
-/* Background Patterns */
-.bg-pinstripe {
-  background-image: linear-gradient(to right, rgba(12, 21, 43, 0.03) 1px, transparent 1px);
-  background-size: 24px 100%;
-}
-
-.bg-ledger {
-  background-image: linear-gradient(to bottom, rgba(226, 223, 214, 0.45) 1px, transparent 1px);
-  background-size: 100% 32px;
+.font-tabular, .tabular-nums {
+  font-variant-numeric: tabular-nums;
 }
 
 /* ========================================================
-   RESTRICTED BUTTON SYSTEM — BUSINESS MARKETPLACE
-   Deep navy primary, fine borders, minimal rounding (2px),
-   tactile top highlight, active-press feedback, zero bounce.
+   MODERN B2B BUTTON SYSTEM (Acquire.com / Stripe / Zerodha Standard)
+   Clean, confident, rounded-lg, natural sentence casing
    ======================================================== */
 @layer components {
   /* Base button styling */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 font-mono text-xs font-bold uppercase tracking-[0.1em] transition-all duration-150 select-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-950/25 focus-visible:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none rounded-[2px];
+    @apply inline-flex items-center justify-center gap-2 font-sans text-sm font-semibold transition-all duration-150 select-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/25 focus-visible:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none rounded-lg;
   }
 
-  /* 1. Primary Banker Navy Button */
+  /* 1. Primary Solid Dark (High Intent) */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-navy-950 text-white font-mono text-xs font-bold uppercase tracking-[0.1em] border border-navy-800 transition-all duration-150 shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(7,13,30,0.2)] hover:bg-navy-900 hover:border-navy-700 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_2px_4px_rgba(7,13,30,0.28)] active:translate-y-[0.5px] active:shadow-inner focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-950/30 rounded-[2px] disabled:opacity-50 disabled:pointer-events-none;
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-900 text-white font-sans text-sm font-semibold border border-slate-900 transition-all duration-150 shadow-xs hover:bg-slate-800 hover:shadow-sm active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/30 rounded-lg disabled:opacity-50 disabled:pointer-events-none;
   }
 
-  /* 2. Fiduciary British Racing Teal Button */
+  /* 2. Brand Accent Button (Blue / Active Call to Action) */
+  .btn-brand {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-600 text-white font-sans text-sm font-semibold transition-all duration-150 shadow-xs hover:bg-blue-700 hover:shadow-sm active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600/30 rounded-lg disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  /* 3. Verified Fiduciary Action (Emerald / NDA & Verify) */
   .btn-teal {
-    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-teal-800 text-white font-mono text-xs font-bold uppercase tracking-[0.1em] border border-teal-700 transition-all duration-150 shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_1px_2px_rgba(10,99,85,0.22)] hover:bg-teal-700 hover:border-teal-600 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_2px_5px_rgba(10,99,85,0.3)] active:translate-y-[0.5px] active:shadow-inner focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-700/30 rounded-[2px] disabled:opacity-50 disabled:pointer-events-none;
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-emerald-600 text-white font-sans text-sm font-semibold transition-all duration-150 shadow-xs hover:bg-emerald-700 hover:shadow-sm active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/30 rounded-lg disabled:opacity-50 disabled:pointer-events-none;
   }
 
-  /* 3. Secondary Paper / Ivory Outline Button */
+  /* 4. Secondary White Outline (Clean, Modern) */
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-white text-navy-950 font-mono text-xs font-bold uppercase tracking-[0.1em] border border-[#d6d2c4] transition-all duration-150 shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:bg-[#fbfbf9] hover:border-navy-950/60 hover:text-navy-950 hover:shadow-[0_2px_4px_rgba(0,0,0,0.07)] active:translate-y-[0.5px] active:bg-[#f5f4ef] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-950/20 rounded-[2px] disabled:opacity-50 disabled:pointer-events-none;
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-white text-slate-700 font-sans text-sm font-semibold border border-slate-200 transition-all duration-150 shadow-xs hover:bg-slate-50 hover:border-slate-300 hover:text-slate-900 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/20 rounded-lg disabled:opacity-50 disabled:pointer-events-none;
   }
 
-  /* 4. Ghost / Tertiary Action */
+  /* 5. Ghost Action */
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-1.5 px-3 py-1.5 bg-transparent text-slate-700 hover:text-navy-950 hover:bg-black/5 font-mono text-xs font-bold uppercase tracking-[0.08em] transition-colors rounded-[2px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-950/15 disabled:opacity-50 disabled:pointer-events-none;
+    @apply inline-flex items-center justify-center gap-1.5 px-3 py-1.5 bg-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-sans text-sm font-medium transition-colors rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/20 disabled:opacity-50 disabled:pointer-events-none;
   }
 
-  /* 5. Destructive / Red Action Button */
+  /* 6. Destructive */
   .btn-danger {
-    @apply inline-flex items-center justify-center gap-2 px-4 py-2 bg-red-700 hover:bg-red-800 text-white font-mono text-xs font-bold uppercase tracking-[0.1em] border border-red-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.15)] transition-all duration-150 active:translate-y-[0.5px] rounded-[2px] disabled:opacity-50 disabled:pointer-events-none;
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white font-sans text-sm font-semibold shadow-xs transition-all duration-150 active:scale-[0.99] rounded-lg disabled:opacity-50 disabled:pointer-events-none;
   }
 
   /* Sizing Variants */
   .btn-sm {
-    @apply px-3 py-1.5 text-[11px] tracking-[0.08em] h-8;
+    @apply px-3 py-1.5 text-xs rounded-md h-8;
   }
 
   .btn-md {
-    @apply px-4 py-2.5 text-xs tracking-[0.1em] h-10;
+    @apply px-4 py-2 text-sm rounded-lg h-10;
   }
 
   .btn-lg {
-    @apply px-6 py-3 text-xs tracking-[0.12em] h-12;
+    @apply px-5 py-2.5 text-base rounded-xl h-12;
   }
 
   .btn-icon {
-    @apply p-2 min-w-[36px] min-h-[36px] flex items-center justify-center rounded-[2px];
+    @apply p-2 min-w-[36px] min-h-[36px] flex items-center justify-center rounded-lg;
   }
 
-  /* Badge / Protocol Status Stamps */
+  /* Status badge stamps */
   .stamp-tag {
-    @apply inline-flex items-center gap-1 font-mono text-[10px] uppercase font-bold tracking-[0.1em] px-2 py-0.5 border rounded-[2px];
+    @apply inline-flex items-center gap-1 font-sans text-xs font-medium px-2.5 py-0.5 rounded-full;
   }
 }

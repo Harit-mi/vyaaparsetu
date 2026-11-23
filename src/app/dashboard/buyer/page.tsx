@@ -67,64 +67,63 @@ export default function BuyerDashboardPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
-      {/* Editorial Header / Desk Masthead */}
-      <div className="border-b border-[#e2dfd6] pb-6 space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-3 text-[11px] font-mono uppercase tracking-wider text-slate-500">
+      {/* Header & Mandate Summary */}
+      <div className="border-b border-slate-200 pb-6 space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 bg-teal-600 inline-block" />
-            <span>ACQUISITION CONTROL DESK</span>
-            <span>&bull;</span>
-            <span className="text-navy-950 font-bold">DOSSIER #ACQ-{currentUser.id.toUpperCase()}</span>
+            <span className="w-2 h-2 rounded-full bg-emerald-500" />
+            <span className="font-semibold text-slate-700">Acquisition Control Desk</span>
+            <span>•</span>
+            <span className="font-medium text-slate-500">ID #{currentUser.id}</span>
           </div>
           <div className="flex items-center gap-3">
-            <span className="inline-flex items-center gap-1 text-teal-800 font-semibold bg-teal-50 px-2.5 py-0.5 border border-teal-200">
-              <ShieldCheck className="w-3.5 h-3.5 text-teal-700" />
-              MCA DIN & PROOF OF FUNDS VERIFIED
+            <span className="inline-flex items-center gap-1.5 text-emerald-700 font-semibold bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200/80 text-xs">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              MCA DIN & Funds Verified
             </span>
-            <span className="text-slate-400">ACTIVE SESSION</span>
           </div>
         </div>
 
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
           <div className="space-y-1">
-            <h1 className="font-display text-3xl sm:text-4xl font-extrabold text-navy-950 tracking-tight">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
               {currentUser.fullName}
             </h1>
-            <p className="font-mono text-xs text-slate-600">
-              {currentUser.companyName || "Growth Capital Holdings Ltd"} &nbsp;|&nbsp; {currentUser.city}, {currentUser.state}
+            <p className="text-sm text-slate-600">
+              {currentUser.companyName || "Growth Capital Holdings Ltd"} &nbsp;•&nbsp; {currentUser.city}, {currentUser.state}
             </p>
           </div>
 
-          {/* Mandate Ledger Strip */}
-          <div className="bg-white border border-[#e2dfd6] p-4 text-xs space-y-2 lg:min-w-[420px]">
-            <div className="flex items-center justify-between border-b border-[#e2dfd6] pb-2">
-              <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 font-bold">
-                ACQUISITION MANDATE LEDGER
+          {/* Mandate Strip */}
+          <div className="bg-white rounded-2xl border border-slate-200/90 p-5 text-xs space-y-3 lg:min-w-[420px] shadow-card">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <span className="text-xs uppercase tracking-wider text-slate-500 font-bold">
+                Investment Mandate
               </span>
               <Link
                 href="/buying-profile"
-                className="font-mono text-[11px] text-teal-700 font-bold hover:underline flex items-center gap-1"
+                className="text-xs text-blue-600 font-semibold hover:text-blue-800 flex items-center gap-1 transition"
               >
-                <span>EDIT CRITERIA</span>
+                <span>Edit Criteria</span>
                 <ArrowRight className="w-3 h-3" />
               </Link>
             </div>
-            <div className="grid grid-cols-2 gap-4 pt-1 font-mono">
+            <div className="grid grid-cols-2 gap-4">
               <div>
-                <span className="text-[10px] text-slate-400 block uppercase">CAPITAL ALLOCATION</span>
-                <span className="text-navy-950 font-bold text-xs tabular-nums">
+                <span className="text-[11px] text-slate-400 block font-medium">Capital Allocation</span>
+                <span className="text-slate-900 font-bold text-sm">
                   {formatINR(buyerProfile.minBudget)} – {formatINR(buyerProfile.maxBudget)}
                 </span>
               </div>
               <div>
-                <span className="text-[10px] text-slate-400 block uppercase">ACQUISITION EXP</span>
-                <span className="text-navy-950 font-bold text-xs uppercase">
+                <span className="text-[11px] text-slate-400 block font-medium">Acquisition Experience</span>
+                <span className="text-slate-900 font-bold text-sm capitalize">
                   {buyerProfile.acquisitionExperience.replace(/_/g, " ")}
                 </span>
               </div>
             </div>
-            <div className="text-[11px] text-slate-600 truncate border-t border-[#e2dfd6]/70 pt-1.5 font-sans">
-              <span className="font-mono text-[10px] text-slate-400 uppercase">TARGET SECTORS: </span>
+            <div className="text-xs text-slate-600 truncate border-t border-slate-100 pt-2">
+              <span className="text-slate-400 font-medium">Target Sectors: </span>
               {buyerProfile.preferredIndustries.join(", ")}
             </div>
           </div>
@@ -132,28 +131,32 @@ export default function BuyerDashboardPage() {
       </div>
 
       {/* Navigation Tabs Bar */}
-      <div className="flex items-center gap-1 border-b border-[#e2dfd6] overflow-x-auto bg-[#f5f4ef] p-1">
+      <div className="flex items-center gap-1.5 overflow-x-auto bg-slate-100/80 p-1.5 rounded-xl border border-slate-200/70">
         {[
-          { key: "matches", label: "CURATED MATCHES", count: matchedListings.length },
-          { key: "saved", label: "SAVED SHORTLIST", count: savedListings.length },
-          { key: "inquiries", label: "TRANSMITTED ENQUIRIES", count: inquiries.length },
-          { key: "ndas", label: "BILATERAL NDAS", count: ndas.length },
-          { key: "deals", label: "DEAL ROOM PIPELINE", count: deals.length },
+          { key: "matches", label: "Curated Matches", count: matchedListings.length },
+          { key: "saved", label: "Shortlisted", count: savedListings.length },
+          { key: "inquiries", label: "Inquiries", count: inquiries.length },
+          { key: "ndas", label: "Signed NDAs", count: ndas.length },
+          { key: "deals", label: "Deal Rooms", count: deals.length },
         ].map((tab) => {
           const isActive = activeTab === tab.key;
           return (
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key as any)}
-              className={`px-4 py-2.5 font-mono text-xs font-bold transition uppercase tracking-wider whitespace-nowrap border ${
+              className={`px-4 py-2 rounded-lg text-xs font-semibold transition whitespace-nowrap flex items-center gap-2 ${
                 isActive
-                  ? "bg-white text-navy-950 border-[#e2dfd6] border-b-transparent shadow-xs"
-                  : "bg-transparent text-slate-600 border-transparent hover:text-navy-950 hover:bg-white/60"
+                  ? "bg-white text-slate-900 shadow-sm"
+                  : "text-slate-600 hover:text-slate-900 hover:bg-white/50"
               }`}
             >
               <span>{tab.label}</span>
-              <span className={`ml-1.5 font-mono text-[11px] tabular-nums ${isActive ? "text-teal-700 font-extrabold" : "text-slate-400"}`}>
-                [{tab.count}]
+              <span
+                className={`text-[11px] px-1.5 py-0.2 rounded-full font-bold ${
+                  isActive ? "bg-blue-50 text-blue-700" : "bg-slate-200/70 text-slate-600"
+                }`}
+              >
+                {tab.count}
               </span>
             </button>
           );
@@ -163,20 +166,20 @@ export default function BuyerDashboardPage() {
       {/* TAB 1: CURATED MATCHES */}
       {activeTab === "matches" && (
         <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#e2dfd6] pb-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-3">
             <div>
-              <h2 className="font-display text-lg font-bold text-navy-950 tracking-tight">
-                MANDATE-MATCHED PROSPECTUSES
+              <h2 className="text-xl font-bold text-slate-900 tracking-tight">
+                Mandate-Matched Businesses
               </h2>
-              <p className="text-xs text-slate-500 font-sans mt-0.5">
-                Qualified opportunities matching your ticket size ({formatINR(buyerProfile.minBudget)} – {formatINR(buyerProfile.maxBudget)}) and target industries.
+              <p className="text-xs text-slate-500 mt-0.5">
+                Target opportunities matching your budget ({formatINR(buyerProfile.minBudget)} – {formatINR(buyerProfile.maxBudget)}) and preferred sectors.
               </p>
             </div>
             <Link
               href="/businesses"
-              className="inline-flex items-center gap-1.5 font-mono text-xs font-bold text-teal-800 hover:text-teal-950 uppercase tracking-wider"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-800"
             >
-              <span>SEARCH ALL {allListings.length} LISTINGS</span>
+              <span>Browse All {allListings.length} Listings</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
@@ -184,8 +187,8 @@ export default function BuyerDashboardPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {matchedListings.map((l) => (
               <div key={l.id} className="relative">
-                <div className="absolute top-3 right-3 z-20 bg-teal-800 text-white font-mono font-bold text-[10px] px-2 py-0.5 border border-teal-900 tracking-wider shadow-xs">
-                  {l.matchScore || 94}% MANDATE MATCH
+                <div className="absolute top-3 right-3 z-20 bg-emerald-600 text-white font-semibold text-xs px-2.5 py-1 rounded-full shadow-sm">
+                  {l.matchScore || 94}% Match
                 </div>
                 <ListingCard listing={l} />
               </div>
@@ -204,21 +207,22 @@ export default function BuyerDashboardPage() {
               ))}
             </div>
           ) : (
-            <div className="bg-white p-12 border border-[#e2dfd6] text-center space-y-4">
-              <div className="w-12 h-12 border border-[#e2dfd6] bg-[#fbfbf9] flex items-center justify-center mx-auto text-slate-400">
+            <div className="bg-white p-12 rounded-2xl border border-slate-200 text-center space-y-4 shadow-card">
+              <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mx-auto text-slate-400">
                 <Bookmark className="w-6 h-6" />
               </div>
               <div className="space-y-1">
-                <h3 className="font-display font-bold text-navy-950 text-base">NO SHORTLISTED OPPORTUNITIES</h3>
-                <p className="text-xs text-slate-500 font-sans max-w-md mx-auto">
-                  Click the bookmark action on any business listing card to save it to your confidential investment committee shortlist.
+                <h3 className="font-bold text-slate-900 text-base">No Shortlisted Opportunities</h3>
+                <p className="text-xs text-slate-500 max-w-md mx-auto">
+                  Click the bookmark icon on any business card to save it to your confidential investment shortlist.
                 </p>
               </div>
               <Link
                 href="/businesses"
-                className="inline-block mt-2 px-5 py-2.5 bg-navy-950 text-white font-mono text-xs uppercase tracking-wider font-bold hover:bg-navy-900 transition"
+                className="btn-brand btn-md inline-flex items-center gap-2"
               >
-                BROWSE OPPORTUNITY CATALOGUE
+                <span>Browse Marketplace</span>
+                <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           )}
@@ -228,69 +232,69 @@ export default function BuyerDashboardPage() {
       {/* TAB 3: INQUIRIES */}
       {activeTab === "inquiries" && (
         <div className="space-y-4">
-          <div className="border border-[#e2dfd6] bg-white divide-y divide-[#e2dfd6]">
-            <div className="p-4 bg-[#fbfbf9] flex items-center justify-between text-xs font-mono uppercase tracking-wider text-slate-500">
-              <span>TRANSMITTED COMMERCIAL ENQUIRY LEDGER</span>
-              <span>TOTAL: {inquiries.length} TRANSMISSIONS</span>
+          <div className="bg-white rounded-2xl border border-slate-200/90 shadow-card divide-y divide-slate-100 overflow-hidden">
+            <div className="p-4 bg-slate-50 flex items-center justify-between text-xs font-semibold text-slate-500 uppercase tracking-wider">
+              <span>Transmitted Commercial Inquiries</span>
+              <span>Total: {inquiries.length} Active</span>
             </div>
 
             {inquiries.map((inq) => (
               <div key={inq.id} className="p-6 space-y-4 text-xs">
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
                   <div className="space-y-1">
-                    <span className="font-mono text-[10px] uppercase tracking-wider text-slate-400 block">
-                      TARGET MANDATE OPPORTUNITY
+                    <span className="text-[11px] uppercase tracking-wider text-slate-400 font-semibold block">
+                      Target Mandate
                     </span>
-                    <h4 className="font-display font-bold text-navy-950 text-base">{inq.listingTitle}</h4>
-                    <span className="font-mono text-[11px] text-slate-500">
-                      TRANSMITTED ON {formatDate(inq.createdAt)} &bull; PROMOTER REF: #{inq.sellerId}
+                    <h4 className="font-bold text-slate-900 text-base">{inq.listingTitle}</h4>
+                    <span className="text-xs text-slate-500">
+                      Sent on {formatDate(inq.createdAt)} • Seller Ref #{inq.sellerId}
                     </span>
                   </div>
 
                   <span
-                    className={`font-mono text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 border self-start ${
+                    className={`text-xs font-semibold px-3 py-1 rounded-full self-start capitalize ${
                       inq.status === "accepted"
-                        ? "bg-teal-50 text-teal-800 border-teal-300"
-                        : "bg-amber-50 text-amber-800 border-amber-300"
+                        ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                        : "bg-amber-50 text-amber-700 border border-amber-200"
                     }`}
                   >
-                    STATUS: {inq.status.replace("_", " ")}
+                    {inq.status.replace("_", " ")}
                   </span>
                 </div>
 
-                <div className="bg-[#fbfbf9] p-4 border border-[#e2dfd6] space-y-2">
-                  <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] text-navy-900 border-b border-[#e2dfd6] pb-2">
+                <div className="bg-slate-50 rounded-xl p-4 border border-slate-200/80 space-y-2">
+                  <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-700 border-b border-slate-200 pb-2">
                     <span>
-                      INDICATIVE VALUATION:{" "}
-                      <strong className="text-teal-800 font-bold tabular-nums">
-                        {inq.indicativeOfferBudget ? formatINR(inq.indicativeOfferBudget) : "NEGOTIABLE / UNDISCLOSED"}
+                      Indicative Budget:{" "}
+                      <strong className="text-slate-900 font-bold">
+                        {inq.indicativeOfferBudget ? formatINR(inq.indicativeOfferBudget) : "Negotiable"}
                       </strong>
                     </span>
                     <span>
-                      SOURCE OF FUNDS: <strong className="text-navy-950 font-bold uppercase">{inq.intendedFundingSource}</strong>
+                      Funding Source: <strong className="text-slate-900 font-bold capitalize">{inq.intendedFundingSource}</strong>
                     </span>
                   </div>
-                  <p className="text-slate-700 font-serif italic text-xs leading-relaxed pt-1">
+                  <p className="text-slate-600 text-xs leading-relaxed pt-1">
                     &ldquo;{inq.message}&rdquo;
                   </p>
                 </div>
 
                 <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
-                  <span className="font-mono text-[11px] text-slate-400">
-                    TRANSACTION ATTRIBUTION WINDOW PROTECTED UNDER SECTION 79 IT ACT
+                  <span className="text-xs text-slate-400">
+                    Protected under platform attribution covenants
                   </span>
                   <div className="flex items-center gap-2">
                     <Link
                       href="/dashboard/enquiries"
                       className="btn-secondary btn-sm"
                     >
-                      FULL ENQUIRY LOG
+                      View All Inquiries
                     </Link>
                     <Link
                       href="/messages"
-                      className="btn-primary btn-sm"
+                      className="btn-brand btn-sm"
                     >
-                      OPEN DEAL ROOM CHAT
+                      Open Chat
                     </Link>
                   </div>
                 </div>
@@ -303,40 +307,40 @@ export default function BuyerDashboardPage() {
       {/* TAB 4: NDAS */}
       {activeTab === "ndas" && (
         <div className="space-y-4">
-          <div className="border border-[#e2dfd6] bg-white divide-y divide-[#e2dfd6]">
-            <div className="p-4 bg-[#fbfbf9] flex items-center justify-between text-xs font-mono uppercase tracking-wider text-slate-500">
-              <span>EXECUTED BILATERAL CONFIDENTIALITY COVENANTS</span>
-              <span>TOTAL: {ndas.length} ACTIVE COVENANTS</span>
+          <div className="bg-white rounded-2xl border border-slate-200/90 shadow-card divide-y divide-slate-100 overflow-hidden">
+            <div className="p-4 bg-slate-50 flex items-center justify-between text-xs font-semibold text-slate-500 uppercase tracking-wider">
+              <span>Executed Confidentiality Agreements</span>
+              <span>Total: {ndas.length} Active</span>
             </div>
 
             {ndas.map((nda) => (
               <div key={nda.id} className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 text-xs">
                 <div className="space-y-2">
-                  <div className="flex flex-wrap items-center gap-2 font-mono text-[10px]">
-                    <span className="text-teal-800 font-bold bg-teal-50 border border-teal-200 px-2 py-0.5 uppercase tracking-wider">
-                      ACTIVE BILATERAL COVENANT
+                  <div className="flex flex-wrap items-center gap-2 text-xs">
+                    <span className="text-emerald-700 font-semibold bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">
+                      Active Bilateral NDA
                     </span>
-                    <span className="text-slate-400">AGREEMENT REF #{nda.id}</span>
+                    <span className="text-slate-400">Ref #{nda.id}</span>
                   </div>
-                  <h4 className="font-display font-bold text-navy-950 text-base">
-                    CONFIDENTIAL DISCLOSURE COVENANT &mdash; OPPORTUNITY #{nda.listingId}
+                  <h4 className="font-bold text-slate-900 text-base">
+                    Confidential Disclosure Covenant &mdash; #{nda.listingId}
                   </h4>
-                  <div className="font-mono text-xs text-slate-500 space-y-0.5">
+                  <div className="text-xs text-slate-500 space-y-0.5">
                     <div>
-                      EXECUTED: {formatDate(nda.signedAt)} &bull; VALIDITY THROUGH: {formatDate(nda.validUntil)}
+                      Executed: {formatDate(nda.signedAt)} • Valid through: {formatDate(nda.validUntil)}
                     </div>
-                    <div className="text-slate-400 text-[11px]">
-                      FORENSIC WATERMARK EMBEDDED: <span className="text-navy-900 font-semibold">{nda.watermarkText}</span>
+                    <div className="text-slate-400">
+                      Watermark Embedded: <span className="text-slate-800 font-medium">{nda.watermarkText}</span>
                     </div>
                   </div>
                 </div>
 
                 <Link
                   href={`/businesses/${nda.listingId}`}
-                  className="btn-teal self-start md:self-auto"
+                  className="btn-brand btn-sm self-start md:self-auto"
                 >
-                  <ShieldCheck className="w-4 h-4 text-teal-300" />
-                  <span>ACCESS DATA ROOM EXHIBITS</span>
+                  <ShieldCheck className="w-4 h-4" />
+                  <span>Access Data Room</span>
                 </Link>
               </div>
             ))}

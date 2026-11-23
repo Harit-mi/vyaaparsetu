@@ -2,7 +2,6 @@
 
 import React from "react";
 import Link from "next/link";
-import { MarketplaceIcon } from "@/components/icons";
 import {
   ArrowRight,
   TrendingUp,
@@ -12,153 +11,215 @@ import {
   AlertCircle,
   Clock,
   ArrowUpRight,
+  Lock,
+  ShieldCheck,
+  Scale,
+  Sparkles,
+  Building2,
+  BadgeCheck,
+  ChevronRight,
 } from "lucide-react";
 
 export default function SellOverviewPage() {
   return (
-    <div className="space-y-12 sm:space-y-16 pb-20">
-      {/* 1. EDITORIAL HEADER */}
-      <section className="bg-ivory-100 border-b border-ivory-400 pt-10 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-5xl mx-auto space-y-6">
-          <div className="inline-flex items-center gap-2 border border-bronze-400 bg-bronze-50 px-2.5 py-1 text-[10px] font-mono uppercase tracking-widest text-bronze-800">
-            <MarketplaceIcon name="lock" size="xs" className="text-bronze-700" />
-            <span>CONFIDENTIAL DIVESTMENT PROTOCOL • PROMOTER ADVISORY</span>
+    <div className="space-y-16 pb-24">
+      {/* 1. HERO HEADER */}
+      <section className="relative overflow-hidden bg-white border-b border-slate-200/80 pt-16 pb-20 px-4 sm:px-6 lg:px-8">
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-50/40 via-transparent to-transparent pointer-events-none" />
+        <div className="max-w-5xl mx-auto relative space-y-6 text-center">
+          <div className="inline-flex items-center gap-2 border border-blue-200 bg-blue-50/80 px-3.5 py-1.5 rounded-full text-xs font-semibold text-blue-800 shadow-xs">
+            <Lock className="w-3.5 h-3.5 text-blue-600" />
+            <span>Confidential Divestment Protocol • Promoter Advisory</span>
           </div>
 
-          <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#0c152b] leading-[1.15]">
-            Discreet Enterprise Divestment to Qualified Institutional Acquirers.
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.12]">
+            Sell Your Business With{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+              Absolute Discretion
+            </span>
           </h1>
 
-          <p className="font-serif-editorial italic text-base sm:text-lg text-slate-700 leading-relaxed max-w-3xl">
-            VyapaarSetu safeguards corporate goodwill, supplier accounts, and employee stability with strict blind teasers, dynamic cryptographic watermarking, and pre-screened financial acquirers.
+          <p className="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-3xl mx-auto">
+            VyapaarSetu connects verified Indian enterprise owners directly with institutional acquirers, family offices, and strategic buyers. Zero leakages, blind teasers, and vetted diligence.
           </p>
 
-          <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
+          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/sell/new"
-              className="btn-primary btn-lg w-full sm:w-auto"
+              className="btn-brand btn-lg w-full sm:w-auto shadow-md hover:shadow-lg inline-flex items-center justify-center gap-2"
             >
-              <span>File Listing Mandate</span>
-              <ArrowRight className="w-3.5 h-3.5 text-teal-400" />
+              <span>List Your Business for Sale</span>
+              <ArrowRight className="w-4 h-4" />
             </Link>
 
             <Link
               href="/businesses"
-              className="btn-secondary btn-lg w-full sm:w-auto"
+              className="btn-secondary btn-lg w-full sm:w-auto inline-flex items-center justify-center gap-2"
             >
-              <span>Examine Live Market Teasers</span>
+              <span>Explore Active Listings</span>
+              <ArrowUpRight className="w-4 h-4 text-slate-400" />
             </Link>
           </div>
+
+          <div className="pt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-slate-500 font-medium">
+            <span className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+              100% Blind Teasers
+            </span>
+            <span className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+              Pre-vetted Institutional Buyers
+            </span>
+            <span className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+              ₹0 Upfront Cost
+            </span>
+          </div>
         </div>
       </section>
 
-      {/* 2. THE THREE FIDUCIARY PILLARS FOR PROMOTERS */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="border-b border-ivory-400 pb-3">
-          <span className="font-mono text-[10px] uppercase tracking-widest text-teal-800 font-bold">
-            FOUNDER SAFEGUARDS
+      {/* 2. THE THREE PILLARS FOR PROMOTERS */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="text-center max-w-2xl mx-auto space-y-2">
+          <span className="text-xs font-bold uppercase tracking-wider text-blue-600">
+            PROMOTER SAFEGUARDS
           </span>
-          <h2 className="font-display text-2xl font-extrabold text-[#0c152b] mt-1">
-            Why Established Business Owners Mandate VyapaarSetu
+          <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
+            Why Established Business Owners Trust VyapaarSetu
           </h2>
+          <p className="text-slate-600 text-sm sm:text-base">
+            Built specifically to prevent the operational disruption common in traditional brokerage.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 font-mono text-xs">
-          <div className="bg-white border border-ivory-400 p-6 space-y-3">
-            <span className="text-bronze-700 font-bold uppercase tracking-wider text-[10px] block">
-              PILLAR 01: BLIND TEASERS
-            </span>
-            <h3 className="font-display font-bold text-base text-[#0c152b]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-white rounded-2xl border border-slate-200/90 p-8 shadow-card hover:shadow-card-hover transition-all duration-200 space-y-4">
+            <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100">
+              <Lock className="w-6 h-6" />
+            </div>
+            <h3 className="font-bold text-xl text-slate-900">
               Zero Commercial Leakage
             </h3>
-            <p className="font-sans text-xs text-slate-600 leading-relaxed">
-              Your registered CIN, company trade name, and exact address are completely withheld. Competitors, lenders, and employees cannot identify your operating entity from the public teaser.
+            <p className="text-sm text-slate-600 leading-relaxed">
+              Your registered entity name, exact address, and key customer lists are completely withheld. Competitors, suppliers, and employees cannot identify your operating entity from the public teaser.
             </p>
+            <div className="pt-2 text-xs font-semibold text-blue-600 flex items-center gap-1">
+              <span>Full blind teaser protection</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </div>
           </div>
 
-          <div className="bg-white border border-ivory-400 p-6 space-y-3">
-            <span className="text-teal-800 font-bold uppercase tracking-wider text-[10px] block">
-              PILLAR 02: DILIGENCE DISCIPLINE
-            </span>
-            <h3 className="font-display font-bold text-base text-[#0c152b]">
-              CA Audit Endorsement
+          <div className="bg-white rounded-2xl border border-slate-200/90 p-8 shadow-card hover:shadow-card-hover transition-all duration-200 space-y-4">
+            <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100">
+              <ShieldCheck className="w-6 h-6" />
+            </div>
+            <h3 className="font-bold text-xl text-slate-900">
+              CA & GST Diligence
             </h3>
-            <p className="font-sans text-xs text-slate-600 leading-relaxed">
-              Legitimate buyers discount unverified claims. Mandates cross-verified with Form 3CD tax audit reports and 3-year GSTR-9 returns command up to 35% higher multiples.
+            <p className="text-sm text-slate-600 leading-relaxed">
+              Legitimate institutional acquirers discount unverified revenue claims. Listings cross-verified with Form 3CD tax audit reports and 3-year GSTR-9 returns command up to 35% higher multiples.
             </p>
+            <div className="pt-2 text-xs font-semibold text-emerald-600 flex items-center gap-1">
+              <span>Higher closing conversion</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </div>
           </div>
 
-          <div className="bg-white border border-ivory-400 p-6 space-y-3">
-            <span className="text-slate-800 font-bold uppercase tracking-wider text-[10px] block">
-              PILLAR 03: LEGAL INTEGRITY
-            </span>
-            <h3 className="font-display font-bold text-base text-[#0c152b]">
-              180-Day Attribution Covenant
+          <div className="bg-white rounded-2xl border border-slate-200/90 p-8 shadow-card hover:shadow-card-hover transition-all duration-200 space-y-4">
+            <div className="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center border border-purple-100">
+              <Scale className="w-6 h-6" />
+            </div>
+            <h3 className="font-bold text-xl text-slate-900">
+              Enforceable Non-Circumvention
             </h3>
-            <p className="font-sans text-xs text-slate-600 leading-relaxed">
-              Every introduction is legally time-stamped. Direct circumvention attempts by buyers are strictly bound by the platform agreement under the Indian Contract Act, 1872.
+            <p className="text-sm text-slate-600 leading-relaxed">
+              Every buyer introduction and document view is cryptographically time-stamped. Direct backchannel circumvention is strictly legally bound under the Indian Contract Act, 1872.
             </p>
+            <div className="pt-2 text-xs font-semibold text-purple-600 flex items-center gap-1">
+              <span>180-day attribution covenant</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 3. M&A COMMISSION MATRIX & FEE SCHEDULE */}
+      {/* 3. TRANSPARENT FEE STRUCTURE */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-ivory-100 border border-ivory-400 p-6 sm:p-8 space-y-6">
-          <div className="border-b border-ivory-300 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <div>
-              <span className="font-mono text-[10px] uppercase tracking-widest text-slate-500 font-bold">
-                COMMISSION TRANSPARENCY
+        <div className="bg-slate-900 rounded-3xl p-8 sm:p-12 text-white relative overflow-hidden shadow-xl">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+          
+          <div className="relative space-y-8">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-800 pb-6">
+              <div className="space-y-2">
+                <span className="text-xs font-bold uppercase tracking-wider text-blue-400">
+                  TRANSPARENT ECONOMICS
+                </span>
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                  Success-Based Fee Schedule
+                </h3>
+                <p className="text-slate-400 text-sm max-w-xl">
+                  We only make money when your business successfully closes. No retainers, no marketing fees, no surprise charges.
+                </p>
+              </div>
+              <span className="inline-flex items-center gap-2 self-start sm:self-auto bg-emerald-500/10 text-emerald-400 px-3.5 py-1.5 rounded-full text-xs font-semibold border border-emerald-500/20">
+                <BadgeCheck className="w-4 h-4 text-emerald-400" />
+                Zero Upfront Listing Fee
               </span>
-              <h3 className="font-display font-extrabold text-xl text-[#0c152b]">
-                Success-Based Fiduciary Fee Schedule
-              </h3>
-            </div>
-            <span className="font-mono text-xs text-teal-800 bg-teal-50 px-2 py-1 border border-teal-200 uppercase font-semibold">
-              Zero Upfront Listing Fee
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
-            <div className="bg-white p-5 border border-ivory-300 space-y-2">
-              <span className="text-[10px] text-slate-400 uppercase font-bold block">1. LISTING & ONBOARDING</span>
-              <span className="font-display font-bold text-lg text-[#0c152b] block">₹0 Upfront</span>
-              <p className="font-sans text-xs text-slate-600">
-                Mandate drafting, teaser creation, and initial verification are completely complimentary.
-              </p>
             </div>
 
-            <div className="bg-white p-5 border border-ivory-300 space-y-2">
-              <span className="text-[10px] text-slate-400 uppercase font-bold block">2. CLOSING COMMISSION</span>
-              <span className="font-display font-bold text-lg text-teal-800 block">2.0% Success Fee</span>
-              <p className="font-sans text-xs text-slate-600">
-                Payable strictly upon definitive closing, escrow release, or share transfer (+ 18% GST).
-              </p>
-            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-slate-800/80 rounded-2xl p-6 border border-slate-700/60 space-y-3">
+                <span className="text-xs text-slate-400 font-semibold uppercase tracking-wider block">
+                  1. Listing & Onboarding
+                </span>
+                <span className="text-3xl font-extrabold text-white block">₹0 Free</span>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Teaser creation, valuation advisory benchmark, and verification checks are 100% free of charge.
+                </p>
+              </div>
 
-            <div className="bg-white p-5 border border-ivory-300 space-y-2">
-              <span className="text-[10px] text-slate-400 uppercase font-bold block">3. ATTRIBUTION WINDOW</span>
-              <span className="font-display font-bold text-lg text-bronze-700 block">180 Days</span>
-              <p className="font-sans text-xs text-slate-600">
-                Valid from date of mutual enquiry acceptance or digital NDA execution.
-              </p>
+              <div className="bg-slate-800/80 rounded-2xl p-6 border border-blue-500/30 space-y-3 relative">
+                <div className="absolute -top-3 right-4 bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                  Only Upon Sale
+                </div>
+                <span className="text-xs text-blue-400 font-semibold uppercase tracking-wider block">
+                  2. Closing Commission
+                </span>
+                <span className="text-3xl font-extrabold text-blue-400 block">2.0%</span>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Payable strictly upon definitive closing, escrow release, or share transfer agreement (+ 18% GST).
+                </p>
+              </div>
+
+              <div className="bg-slate-800/80 rounded-2xl p-6 border border-slate-700/60 space-y-3">
+                <span className="text-xs text-slate-400 font-semibold uppercase tracking-wider block">
+                  3. Attribution Window
+                </span>
+                <span className="text-3xl font-extrabold text-white block">180 Days</span>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Valid from the date of mutual inquiry acceptance or digital NDA execution.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 4. PROMOTER EXIT READINESS CHECKLIST */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="border-b border-ivory-400 pb-3">
-          <span className="font-mono text-[10px] uppercase tracking-widest text-teal-800 font-bold">
-            STATUTORY READINESS
+      {/* 4. SELLER READINESS CHECKLIST */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="border-b border-slate-200/80 pb-4">
+          <span className="text-xs font-bold uppercase tracking-wider text-blue-600">
+            DILIGENCE PREPARATION
           </span>
-          <h2 className="font-display text-2xl font-extrabold text-[#0c152b] mt-1">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">
             Mandate Preparation Checklist for Promoters
           </h2>
+          <p className="text-slate-500 text-sm mt-1">
+            Having these ready accelerates buyer confidence and compresses diligence time by 4x.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono text-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {[
             {
               title: "1. Corporate Signatory Authority",
@@ -177,23 +238,25 @@ export default function SellOverviewPage() {
               detail: "Itemized list of machinery with unencumbered hypothecation status (No NOC dues).",
             },
           ].map((item, i) => (
-            <div key={i} className="p-4 bg-white border border-ivory-400 flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-teal-700 flex-shrink-0 mt-0.5" />
+            <div key={i} className="p-5 bg-white rounded-xl border border-slate-200/80 shadow-xs flex items-start gap-4">
+              <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <CheckCircle2 className="w-5 h-5" />
+              </div>
               <div>
-                <h4 className="font-bold text-slate-900">{item.title}</h4>
-                <p className="font-sans text-xs text-slate-500 mt-1">{item.detail}</p>
+                <h4 className="font-bold text-slate-900 text-sm sm:text-base">{item.title}</h4>
+                <p className="text-xs sm:text-sm text-slate-500 mt-1 leading-relaxed">{item.detail}</p>
               </div>
             </div>
           ))}
         </div>
 
-        <div className="pt-4 text-center">
+        <div className="pt-6 text-center">
           <Link
             href="/sell/new"
-            className="btn-primary btn-lg inline-flex items-center gap-2"
+            className="btn-brand btn-lg inline-flex items-center gap-2 shadow-md hover:shadow-lg"
           >
-            <span>Proceed to Listing Mandate Wizard</span>
-            <ArrowRight className="w-4 h-4 text-teal-400" />
+            <span>Proceed to Listing Wizard</span>
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </section>

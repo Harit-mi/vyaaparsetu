@@ -12,7 +12,6 @@ import { DocumentVaultModal } from "@/components/DocumentVaultModal";
 import { ReportListingModal } from "@/components/ReportListingModal";
 import { PhotoGallery } from "@/components/PhotoGallery";
 import { useToast } from "@/components/Toast";
-import { MarketplaceIcon } from "@/components/icons";
 import {
   ShieldCheck,
   Lock,
@@ -28,8 +27,13 @@ import {
   Users,
   Briefcase,
   Layers,
-  ArrowUpRight,
+  ArrowRight,
+  CheckCircle2,
+  MapPin,
   TrendingUp,
+  Clock,
+  Sparkles,
+  Download,
 } from "lucide-react";
 
 export default function BusinessDetailPage() {
@@ -69,17 +73,19 @@ export default function BusinessDetailPage() {
 
   if (!listing) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-20 text-center space-y-4">
-        <MarketplaceIcon name="office-building" size="xl" className="text-slate-400 mx-auto" />
-        <h2 className="font-display text-xl font-bold text-[#0c152b]">Mandate Dossier Not Located</h2>
-        <p className="font-sans text-xs text-slate-500">
-          The requested mandate identifier ({slugParam}) may have been withdrawn, acquired, or is under compliance review.
+      <div className="max-w-4xl mx-auto px-4 py-24 text-center space-y-4">
+        <div className="w-14 h-14 mx-auto rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
+          <Building className="w-7 h-7" />
+        </div>
+        <h2 className="font-display text-2xl font-bold text-slate-900">Business Opportunity Not Found</h2>
+        <p className="text-sm text-slate-500 max-w-md mx-auto">
+          The requested business listing ({slugParam}) may have been acquired, paused by the owner, or is undergoing compliance vetting.
         </p>
         <Link
           href="/businesses"
-          className="btn-primary inline-flex"
+          className="btn-primary inline-flex mt-2"
         >
-          Return to Dealbook Directory
+          Return to Marketplace Directory
         </Link>
       </div>
     );
@@ -89,7 +95,7 @@ export default function BusinessDetailPage() {
     const res = MarketplaceStorage.toggleSaveListing(listing.id);
     setIsSaved(res);
     showToast(
-      res ? "Mandate Added to Shortlist" : "Removed from Shortlist",
+      res ? "Business Added to Shortlist" : "Removed from Shortlist",
       listing.displayTitle,
       res ? "success" : "info"
     );
@@ -99,7 +105,7 @@ export default function BusinessDetailPage() {
     if (typeof window !== "undefined") {
       navigator.clipboard.writeText(window.location.href);
       setCopiedLink(true);
-      showToast("Link Copied to Clipboard", "Sharable confidential opportunity URL copied.");
+      showToast("Link Copied", "Sharable confidential opportunity link copied to clipboard.");
       setTimeout(() => setCopiedLink(false), 2000);
     }
   };
@@ -123,169 +129,174 @@ export default function BusinessDetailPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-      {/* 1. TOP DOCUMENT HEADER / REGISTRY BAR */}
-      <div className="border-b border-ivory-400 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-2 text-xs font-mono">
+      {/* 1. Breadcrumbs & Actions Bar */}
+      <div className="border-b border-slate-200/80 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-2 text-xs text-slate-500">
           <Link
             href="/businesses"
-            className="text-slate-500 hover:text-[#0c152b] flex items-center gap-1 font-bold uppercase tracking-wider"
+            className="hover:text-blue-600 font-semibold flex items-center gap-1 transition"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Dealbook</span>
+            <span>Marketplace</span>
           </Link>
-          <span className="text-slate-300">/</span>
-          <span className="text-slate-500 uppercase">{listing.industry}</span>
-          <span className="text-slate-300">/</span>
-          <span className="font-bold text-[#0c152b]">#{refCode}</span>
+          <span>/</span>
+          <span>{listing.industry}</span>
+          <span>/</span>
+          <span className="font-semibold text-slate-900">ID #{refCode}</span>
         </div>
 
-        <div className="flex items-center gap-2 font-mono text-xs">
+        <div className="flex items-center gap-2">
           <button
             onClick={copyShareLink}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-ivory-400 bg-white hover:bg-ivory-100 text-slate-700 transition"
-            title="Copy confidential memorandum link"
+            className="btn-secondary btn-sm"
+            title="Share this listing"
           >
-            {copiedLink ? <Check className="w-3.5 h-3.5 text-teal-700" /> : <Share2 className="w-3.5 h-3.5" />}
-            <span className="uppercase tracking-wider text-[11px] font-semibold">{copiedLink ? "Copied" : "Share"}</span>
+            {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Share2 className="w-3.5 h-3.5 text-slate-500" />}
+            <span>{copiedLink ? "Link Copied" : "Share"}</span>
           </button>
 
           <button
             onClick={toggleSave}
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 border transition ${
+            className={`btn-sm ${
               isSaved
-                ? "bg-teal-700 text-white border-teal-700"
-                : "bg-white text-slate-700 border-ivory-400 hover:bg-ivory-100"
+                ? "bg-blue-600 text-white border border-blue-600 hover:bg-blue-700"
+                : "btn-secondary"
             }`}
           >
             <Bookmark className={`w-3.5 h-3.5 ${isSaved ? "fill-current" : ""}`} />
-            <span className="uppercase tracking-wider text-[11px] font-semibold">{isSaved ? "Shortlisted" : "Shortlist"}</span>
+            <span>{isSaved ? "Saved" : "Save"}</span>
           </button>
 
           <button
             onClick={() => setIsReportModalOpen(true)}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-ivory-400 bg-white hover:text-red-700 text-slate-600 transition"
-            title="File regulatory grievance / report listing"
+            className="btn-ghost btn-sm text-slate-400 hover:text-rose-600"
+            title="Report this listing"
           >
-            <AlertTriangle className="w-3.5 h-3.5 text-slate-400" />
-            <span className="uppercase tracking-wider text-[11px] font-semibold">Report</span>
+            <AlertTriangle className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Report</span>
           </button>
         </div>
       </div>
 
-      {/* 2. MAIN DOSSIER GRID: MEMORANDUM (LEFT 2/3) + ACTION CENTER (RIGHT 1/3) */}
+      {/* 2. Main Layout Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Left 8 Cols: Exhibits, Financial Schedules & Operations */}
+        {/* Left Column (Main Content) */}
         <div className="lg:col-span-8 space-y-8">
-          {/* Photo / Blueprint Gallery */}
+          {/* Gallery */}
           <PhotoGallery
             images={gallery}
             title={listing.displayTitle}
-            isConfidential={isConfidential}
             industry={listing.industry}
             subCategory={listing.subCategory}
           />
 
-          {/* Primary Opportunity Card */}
-          <div className="bg-white p-6 sm:p-8 border border-ivory-400 space-y-6">
-            <div className="flex flex-wrap items-center gap-2 font-mono text-[10px]">
-              <span className="bg-[#0c152b] text-white px-2 py-0.5 uppercase tracking-wider font-bold">
+          {/* Title & Overview Card */}
+          <div className="bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-8 shadow-card space-y-6">
+            <div className="flex flex-wrap items-center gap-2 text-xs">
+              <span className="px-3 py-1 bg-blue-50 text-blue-700 font-semibold rounded-full border border-blue-100">
                 {listing.industry}
               </span>
               {listing.subCategory && (
-                <span className="bg-ivory-200 text-slate-700 px-2 py-0.5 uppercase tracking-wider font-semibold border border-ivory-300">
+                <span className="px-3 py-1 bg-slate-100 text-slate-700 font-medium rounded-full">
                   {listing.subCategory}
                 </span>
               )}
               {isConfidential ? (
-                <span className="bg-bronze-50 text-bronze-800 px-2 py-0.5 uppercase tracking-wider font-bold border border-bronze-300 flex items-center gap-1">
-                  <MarketplaceIcon name="lock" size="xs" />
-                  RESTRICTED ANONYMIZED DISCLOSURE
+                <span className="px-3 py-1 bg-amber-50 text-amber-800 font-semibold rounded-full border border-amber-200/70 flex items-center gap-1.5">
+                  <Lock className="w-3 h-3" />
+                  Confidential Opportunity
                 </span>
               ) : (
-                <span className="bg-teal-50 text-teal-800 px-2 py-0.5 uppercase tracking-wider font-semibold border border-teal-200">
-                  PUBLIC RECORD
+                <span className="px-3 py-1 bg-emerald-50 text-emerald-800 font-semibold rounded-full border border-emerald-200 flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                  Public Record
                 </span>
               )}
             </div>
 
-            <div>
-              <h1 className="font-display font-extrabold text-2xl sm:text-3xl text-[#0c152b] leading-tight">
+            <div className="space-y-2">
+              <h1 className="font-display font-extrabold text-2xl sm:text-3xl text-slate-900 tracking-tight leading-tight">
                 {listing.displayTitle}
               </h1>
-              <p className="font-serif-editorial italic text-sm sm:text-base text-slate-700 mt-2 leading-relaxed">
+              <p className="text-base text-slate-600 leading-relaxed">
                 {listing.tagline}
               </p>
             </div>
 
-            {/* Structured Quick Facts Accounting Ledger */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-ivory-100 p-4 border border-ivory-300 font-mono text-xs">
+            {/* Quick Metrics Bar */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 bg-slate-50 rounded-xl border border-slate-100 text-xs">
               <div>
-                <span className="text-[9px] text-slate-500 uppercase block tracking-wider">REGION</span>
-                <span className="font-bold text-slate-900 mt-0.5 block">{listing.city}, {listing.state}</span>
+                <span className="text-slate-400 font-medium block">Location</span>
+                <span className="font-bold text-slate-800 mt-0.5 block">{listing.city}, {listing.state}</span>
               </div>
               <div>
-                <span className="text-[9px] text-slate-500 uppercase block tracking-wider">OPERATIONAL AGE</span>
-                <span className="font-bold text-slate-900 mt-0.5 block">{listing.yearsInOperation} Years</span>
+                <span className="text-slate-400 font-medium block">Operational Age</span>
+                <span className="font-bold text-slate-800 mt-0.5 block">{listing.yearsInOperation} Years</span>
               </div>
               <div>
-                <span className="text-[9px] text-slate-500 uppercase block tracking-wider">TEAM SIZE</span>
-                <span className="font-bold text-slate-900 mt-0.5 block">{listing.teamSizeRange || "15 – 30 Staff"}</span>
+                <span className="text-slate-400 font-medium block">Team Size</span>
+                <span className="font-bold text-slate-800 mt-0.5 block">{listing.teamSizeRange || "15 – 30 Staff"}</span>
               </div>
               <div>
-                <span className="text-[9px] text-slate-500 uppercase block tracking-wider">STRUCTURE</span>
-                <span className="font-bold text-slate-900 mt-0.5 block uppercase">
-                  {listing.saleStructure === "share_sale" ? "100% Equity" : "Asset Sale"}
+                <span className="text-slate-400 font-medium block">Deal Structure</span>
+                <span className="font-bold text-slate-800 mt-0.5 block">
+                  {listing.saleStructure === "share_sale" ? "100% Equity Buyout" : "Asset Sale"}
                 </span>
               </div>
             </div>
 
-            {/* SCHEDULE A: AUDITED FINANCIAL LEDGER */}
-            <div className="space-y-3 pt-4 border-t border-ivory-300">
-              <div className="flex items-center justify-between font-mono">
-                <span className="text-xs font-bold text-[#0c152b] uppercase tracking-wider">
-                  SCHEDULE A: FINANCIAL PERFORMANCE & VALUATION MULTIPLES
-                </span>
-                <span className="text-[10px] text-slate-500 uppercase">
-                  {listing.financialReportingPeriod}
+            {/* Audited Financials Summary */}
+            <div className="space-y-4 pt-4 border-t border-slate-100">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-display font-bold text-lg text-slate-900">
+                    Financial Performance & Multiples
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Reporting Period: {listing.financialReportingPeriod}
+                  </p>
+                </div>
+                <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100">
+                  {ebitdaMargin}% EBITDA Margin
                 </span>
               </div>
 
-              <div className="border border-ivory-400 overflow-x-auto">
-                <table className="w-full text-left font-mono text-xs divide-y divide-ivory-300">
-                  <thead className="bg-ivory-100 text-[10px] text-slate-500 uppercase">
+              <div className="rounded-xl border border-slate-200 overflow-hidden">
+                <table className="w-full text-left text-xs divide-y divide-slate-100">
+                  <thead className="bg-slate-50 text-[11px] font-semibold text-slate-500 uppercase">
                     <tr>
-                      <th className="p-3">Financial Metric</th>
-                      <th className="p-3 text-right">Amount (INR)</th>
-                      <th className="p-3 text-right">Percentage / Notes</th>
+                      <th className="p-3.5">Metric</th>
+                      <th className="p-3.5 text-right">Value (INR)</th>
+                      <th className="p-3.5 text-right">Verification Basis</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-ivory-300 bg-white">
+                  <tbody className="divide-y divide-slate-100 bg-white">
                     <tr>
-                      <td className="p-3 font-semibold text-slate-800">Annual Gross Turnover / Revenue</td>
-                      <td className="p-3 text-right font-bold text-slate-900">{formatINR(listing.annualRevenue)}</td>
-                      <td className="p-3 text-right text-slate-500 text-[11px]">FY2023-24 Filings</td>
+                      <td className="p-3.5 font-medium text-slate-800">Annual Gross Revenue / Turnover</td>
+                      <td className="p-3.5 text-right font-bold text-slate-900 tabular-nums">{formatINR(listing.annualRevenue)}</td>
+                      <td className="p-3.5 text-right text-slate-500">GSTR-9 Annual Return</td>
                     </tr>
                     <tr>
-                      <td className="p-3 font-semibold text-slate-800">Adjusted Operating EBITDA</td>
-                      <td className="p-3 text-right font-bold text-teal-800">{formatINR(listing.annualEbitda)}</td>
-                      <td className="p-3 text-right text-teal-800 font-bold text-[11px]">{ebitdaMargin}% Margin</td>
+                      <td className="p-3.5 font-medium text-slate-800">Adjusted Operating EBITDA</td>
+                      <td className="p-3.5 text-right font-bold text-emerald-600 tabular-nums">{formatINR(listing.annualEbitda)}</td>
+                      <td className="p-3.5 text-right text-emerald-700 font-medium">{ebitdaMargin}% Margin</td>
                     </tr>
                     <tr>
-                      <td className="p-3 font-semibold text-slate-800">Raw Material & WIP Inventory Included</td>
-                      <td className="p-3 text-right text-slate-900">{formatINR(listing.inventoryValueIncluded)}</td>
-                      <td className="p-3 text-right text-slate-500 text-[11px]">Included in Asking EV</td>
+                      <td className="p-3.5 font-medium text-slate-800">Inventory Included in Sale</td>
+                      <td className="p-3.5 text-right font-medium text-slate-800 tabular-nums">{formatINR(listing.inventoryValueIncluded)}</td>
+                      <td className="p-3.5 text-right text-slate-500">Raw Materials & WIP</td>
                     </tr>
                     <tr>
-                      <td className="p-3 font-semibold text-slate-800">Machinery, Plant & Fixed Assets Included</td>
-                      <td className="p-3 text-right text-slate-900">{formatINR(listing.assetsValueIncluded)}</td>
-                      <td className="p-3 text-right text-slate-500 text-[11px]">Book Value Schedule</td>
+                      <td className="p-3.5 font-medium text-slate-800">Machinery & Fixed Assets Book Value</td>
+                      <td className="p-3.5 text-right font-medium text-slate-800 tabular-nums">{formatINR(listing.assetsValueIncluded)}</td>
+                      <td className="p-3.5 text-right text-slate-500">Audited Asset Schedule</td>
                     </tr>
-                    <tr className="bg-ivory-50">
-                      <td className="p-3 font-bold text-[#0c152b]">Indicative Enterprise Valuation (Asking EV)</td>
-                      <td className="p-3 text-right font-display font-extrabold text-sm text-[#0c152b]">
+                    <tr className="bg-slate-50 font-semibold">
+                      <td className="p-3.5 font-bold text-slate-900">Indicative Asking Enterprise Value</td>
+                      <td className="p-3.5 text-right font-display font-extrabold text-base text-slate-900 tabular-nums">
                         {formatINR(listing.askingPrice)}
                       </td>
-                      <td className="p-3 text-right font-mono font-bold text-teal-900 text-[11px]">
+                      <td className="p-3.5 text-right text-blue-700 font-semibold">
                         {listing.annualEbitda > 0 ? (listing.askingPrice / listing.annualEbitda).toFixed(1) : "N/A"}x EBITDA
                       </td>
                     </tr>
@@ -293,99 +304,91 @@ export default function BusinessDetailPage() {
                 </table>
               </div>
 
-              {/* CA Audit Certification Card */}
-              <div className="bg-teal-50 border-l-4 border-teal-700 p-4 space-y-1">
-                <div className="flex items-center gap-2 font-mono text-xs font-bold text-teal-950">
-                  <MarketplaceIcon name="shield-check" size="sm" className="text-teal-700" />
-                  <span>Chartered Accountant Panel Verification Statement</span>
+              {/* CA Statement Card */}
+              <div className="bg-emerald-50/80 rounded-xl border border-emerald-200/80 p-4 space-y-1.5">
+                <div className="flex items-center gap-2 text-xs font-bold text-emerald-950">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                  <span>Chartered Accountant Verification Statement</span>
                 </div>
-                <p className="font-sans text-xs text-teal-900 leading-relaxed">
+                <p className="text-xs text-emerald-900 leading-relaxed">
                   {listing.financialVerificationNote || "Form 3CD Tax Audit Reports and GST GSTR-9 annual reconciliation filings have been verified against banking statements."}
                 </p>
               </div>
             </div>
 
-            {/* SCHEDULE B: OPERATIONAL MODEL & MOAT */}
-            <div className="space-y-3 pt-4 border-t border-ivory-300">
-              <span className="font-mono text-xs font-bold text-[#0c152b] uppercase tracking-wider block">
-                SCHEDULE B: BUSINESS OPERATIONS & STRATEGIC POSITIONING
-              </span>
-
-              <p className="font-sans text-xs sm:text-sm text-slate-700 leading-relaxed">
-                {listing.executiveSummary}
+            {/* Operational Model & Moat */}
+            <div className="space-y-4 pt-4 border-t border-slate-100">
+              <h3 className="font-display font-bold text-lg text-slate-900">
+                Business Model & Competitive Moat
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed whitespace-pre-line">
+                {listing.operatingModel || listing.executiveSummary}
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 font-sans text-xs">
-                <div className="p-3 bg-ivory-50 border border-ivory-300 space-y-1">
-                  <span className="font-mono text-[10px] font-bold uppercase text-slate-500">Products & Service Lines</span>
-                  <p className="text-slate-800">{listing.productsAndServices || "Precision machined forgings and custom pressings."}</p>
+              {listing.growthOpportunities && (
+                <div className="p-4 bg-slate-50 rounded-xl border border-slate-100 space-y-1.5">
+                  <h4 className="font-semibold text-xs text-slate-800 flex items-center gap-1.5">
+                    <TrendingUp className="w-4 h-4 text-blue-600" />
+                    Growth & Expansion Potential
+                  </h4>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    {Array.isArray(listing.growthOpportunities)
+                      ? listing.growthOpportunities.join(". ")
+                      : listing.growthOpportunities}
+                  </p>
                 </div>
-                <div className="p-3 bg-ivory-50 border border-ivory-300 space-y-1">
-                  <span className="font-mono text-[10px] font-bold uppercase text-slate-500">Key Customer Segments</span>
-                  <p className="text-slate-800">{listing.customerSegments || "OEM Tier-1 automotive and industrial machinery clients."}</p>
-                </div>
-              </div>
+              )}
             </div>
 
-            {/* SCHEDULE C: ASSETS & INVENTORY SCHEDULE */}
-            {listing.assetsIncluded && listing.assetsIncluded.length > 0 && (
-              <div className="space-y-3 pt-4 border-t border-ivory-300">
-                <span className="font-mono text-xs font-bold text-[#0c152b] uppercase tracking-wider block">
-                  SCHEDULE C: INCLUDED CAPITAL ASSETS & INFRASTRUCTURE
-                </span>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-sans">
-                  {listing.assetsIncluded.map((asset, i) => (
-                    <li key={i} className="flex items-start gap-2 p-2 bg-ivory-100 border border-ivory-300">
-                      <span className="font-mono font-bold text-teal-800">0{i + 1}.</span>
-                      <span className="text-slate-800">{asset}</span>
-                    </li>
-                  ))}
-                </ul>
+            {/* Included Assets */}
+            <div className="space-y-3 pt-4 border-t border-slate-100">
+              <h3 className="font-display font-bold text-lg text-slate-900">
+                Assets Included in Transfer
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-700">
+                {(Array.isArray(listing.assetsIncluded) && listing.assetsIncluded.length > 0
+                  ? listing.assetsIncluded
+                  : [
+                      "100% Equity / Business Goodwill",
+                      "All Plant Machinery & Stamping Presses",
+                      "Existing Customer Contracts & Tier-1 OEM Vendor Codes",
+                      "GST Registration & Factory Licenses",
+                      "Key Operating Staff Retention Support",
+                    ]
+                ).map((item: string, idx: number) => (
+                  <div key={idx} className="flex items-center gap-2 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                    <CheckCircle2 className="w-4 h-4 text-blue-600 flex-shrink-0" />
+                    <span>{item}</span>
+                  </div>
+                ))}
               </div>
-            )}
-
-            {/* SCHEDULE D: SALE RATIONALE */}
-            {listing.reasonForSale && (
-              <div className="space-y-2 pt-4 border-t border-ivory-300">
-                <span className="font-mono text-xs font-bold text-[#0c152b] uppercase tracking-wider block">
-                  SCHEDULE D: PROMOTER SUCCESSION & SALE RATIONALE
-                </span>
-                <p className="font-serif-editorial italic text-xs text-slate-700 bg-ivory-50 p-3 border border-ivory-300">
-                  &ldquo;{listing.reasonForSale}&rdquo;
-                </p>
-              </div>
-            )}
+            </div>
           </div>
         </div>
 
-        {/* Right 4 Cols: Sticky Investment Action Center */}
-        <div className="lg:col-span-4 space-y-6">
-          <div className="bg-white border-2 border-[#0c152b] p-6 space-y-5 sticky top-24 shadow-md">
-            <div className="border-b border-ivory-300 pb-3">
-              <span className="font-mono text-[10px] text-slate-500 uppercase tracking-widest block font-bold">
-                MANDATE VALUATION
+        {/* Right Sticky Column (Action Sidebar) */}
+        <div className="lg:col-span-4 space-y-6 lg:sticky lg:top-24">
+          <div className="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-card space-y-6">
+            <div>
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider block">
+                Indicative Valuation
               </span>
-              <div className="flex items-baseline justify-between mt-1">
-                <span className="font-display font-extrabold text-2xl text-[#0c152b]">
+              <div className="flex items-baseline gap-2 mt-1">
+                <span className="font-display font-extrabold text-3xl text-slate-900 tracking-tight">
                   {formatINR(listing.askingPrice)}
                 </span>
-                <span className="font-mono text-xs text-teal-800 font-bold">
-                  {listing.annualEbitda > 0 ? (listing.askingPrice / listing.annualEbitda).toFixed(1) : "N/A"}x EBITDA
-                </span>
+                <span className="text-xs font-medium text-slate-500">EV</span>
               </div>
-              <p className="font-mono text-[10px] text-slate-400 mt-0.5">
-                Negotiable via formal Letter of Intent (LOI)
-              </p>
             </div>
 
-            {/* Primary Action Buttons */}
-            <div className="space-y-3 font-mono">
+            {/* Action Buttons */}
+            <div className="space-y-3">
               <button
                 onClick={() => setIsInquiryModalOpen(true)}
-                className="btn-teal w-full py-3 text-xs shadow-md group/inq"
+                className="w-full py-3.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm transition shadow-sm hover:shadow flex items-center justify-center gap-2 active:scale-[0.99]"
               >
-                <span>Submit Acquisition Enquiry</span>
-                <MarketplaceIcon name="arrow-up-right" size="xs" className="text-teal-300 group-hover/inq:translate-x-0.5 group-hover/inq:-translate-y-0.5 transition-transform" />
+                <span>Submit Acquisition Inquiry</span>
+                <ArrowRight className="w-4 h-4 text-blue-200" />
               </button>
 
               <button
@@ -396,79 +399,104 @@ export default function BusinessDetailPage() {
                     setIsNDAModalOpen(true);
                   }
                 }}
-                className={`w-full py-2.5 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all rounded-[2px] ${
+                className={`w-full py-3 px-4 rounded-xl font-semibold text-xs flex items-center justify-center gap-2 transition border ${
                   activeNDA && activeNDA.status === "approved_active"
-                    ? "btn-secondary border-teal-700 bg-teal-50 text-teal-950 font-bold"
-                    : "btn-secondary text-navy-950"
+                    ? "bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100"
+                    : "bg-white text-slate-800 border-slate-200 hover:bg-slate-50 hover:border-slate-300"
                 }`}
               >
-                <MarketplaceIcon name="verified-document" size="xs" className="text-bronze-600" />
+                <FileText className="w-4 h-4 text-slate-500" />
                 <span>
                   {activeNDA && activeNDA.status === "approved_active"
-                    ? "Open Data Room (3 Files Unlocked)"
+                    ? "Open Data Room (Files Unlocked)"
                     : "Sign NDA to Unlock Data Room"}
                 </span>
               </button>
             </div>
 
-            {/* Diligence & Verification Dossier */}
-            <div className="bg-ivory-100 p-4 border border-ivory-300 space-y-2 font-mono text-xs">
-              <span className="font-bold text-[#0c152b] uppercase text-[10px] block border-b border-ivory-300 pb-1">
-                SELLER DILIGENCE STATUS
+            {/* Seller Diligence Checklist */}
+            <div className="p-4 bg-slate-50 rounded-xl border border-slate-100 space-y-3 text-xs">
+              <span className="font-bold text-slate-900 block border-b border-slate-200 pb-2">
+                Diligence & Verification Status
               </span>
-              <div className="space-y-1.5 text-[11px]">
+              <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-600">MCA21 Director DIN:</span>
-                  <span className="text-teal-800 font-bold">MATCH CONFIRMED</span>
+                  <span className="text-slate-600">Director DIN (MCA21):</span>
+                  <span className="text-emerald-700 font-semibold flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    Verified
+                  </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-600">Statutory Authority:</span>
-                  <span className="text-slate-900">DIN / Board Resolution</span>
+                  <span className="text-slate-600">GST Registration:</span>
+                  <span className="text-emerald-700 font-semibold flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    Active
+                  </span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-slate-600">GSTR-9 Reconciliation:</span>
-                  <span className="text-teal-800 font-bold">AUDITED</span>
+                  <span className="text-emerald-700 font-semibold flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    Audited
+                  </span>
                 </div>
               </div>
             </div>
 
-            {/* 180-Day Attribution Covenant */}
-            <div className="text-[10px] font-sans text-slate-500 bg-ivory-50 p-3 border border-ivory-300 space-y-1">
-              <span className="font-mono font-bold text-slate-700 block uppercase">180-Day Deal Attribution Protocol:</span>
-              <p>
-                Any introductory transaction resulting from this mandate within 180 days is subject to VyapaarSetu success commission terms (2% + 18% GST).
+            {/* Attribution Notice */}
+            <div className="text-[11px] text-slate-500 bg-slate-50/70 p-3.5 rounded-xl border border-slate-100 space-y-1">
+              <span className="font-semibold text-slate-700 block">180-Day Deal Attribution Covenant</span>
+              <p className="leading-relaxed">
+                Introductory interactions on this platform are governed by standard 180-day attribution and success commission terms (2.0% + GST).
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* 3. STICKY MOBILE ACQUISITION BAR */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-ivory-400 px-4 py-3 flex items-center justify-between gap-3 shadow-lg lg:hidden">
+      {/* Sticky Mobile Action Bar */}
+      <div className="fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-slate-200 px-4 py-3 flex items-center justify-between gap-3 shadow-lg lg:hidden">
         <div>
-          <span className="text-[9px] font-mono text-slate-500 uppercase tracking-wider block">Asking Valuation</span>
-          <span className="font-display font-extrabold text-base text-[#0c152b]">{formatINR(listing.askingPrice)}</span>
+          <span className="text-[11px] text-slate-500 block">Asking Price</span>
+          <span className="font-bold text-base text-slate-900">{formatINR(listing.askingPrice)}</span>
         </div>
         <div className="flex items-center gap-2">
           {isConfidential && !hasUnlockedNDA ? (
             <button
               onClick={() => setIsNDAModalOpen(true)}
-              className="px-3.5 py-2 bg-bronze-700 hover:bg-bronze-800 text-white font-mono text-xs uppercase font-bold"
+              className="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs rounded-lg"
             >
               Sign NDA
             </button>
           ) : (
             <button
-              onClick={() => setIsInquiryModalOpen(true)}
-              className="px-3.5 py-2 bg-teal-700 hover:bg-teal-800 text-white font-mono text-xs uppercase font-bold"
+              onClick={() => setIsVaultModalOpen(true)}
+              className="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-lg"
             >
-              Enquire
+              Data Room
             </button>
           )}
+
+          <button
+            onClick={() => setIsInquiryModalOpen(true)}
+            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs rounded-lg shadow-sm"
+          >
+            Inquire Now
+          </button>
         </div>
       </div>
 
-      {/* MODALS */}
+      {/* Modals */}
+      <InquiryModal
+        listing={listing}
+        isOpen={isInquiryModalOpen}
+        onClose={() => setIsInquiryModalOpen(false)}
+        onSuccess={() => {
+          showToast("Inquiry Transmitted", "The promoter has been notified of your interest.");
+        }}
+      />
+
       <NDAWorkflowModal
         listing={listing}
         isOpen={isNDAModalOpen}
@@ -476,17 +504,6 @@ export default function BusinessDetailPage() {
         onSignedSuccess={(nda) => {
           setActiveNDA(nda);
           setIsVaultModalOpen(true);
-          showToast("Digital NDA Executed", "Data Room documents are now unlocked with dynamic watermarking.");
-        }}
-      />
-
-      <InquiryModal
-        listing={listing}
-        isOpen={isInquiryModalOpen}
-        onClose={() => setIsInquiryModalOpen(false)}
-        onSuccess={() => {
-          showToast("Enquiry Transmitted to Seller", "Your qualified introduction has been recorded.", "success");
-          router.push("/dashboard/enquiries");
         }}
       />
 

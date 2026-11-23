@@ -50,15 +50,15 @@ export function DocumentVaultModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="relative w-full max-w-3xl bg-white rounded-[2px] shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="relative w-full max-w-3xl bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="px-6 py-4 bg-navy-900 text-white flex items-center justify-between">
+        <div className="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 bg-emerald-500/20 text-emerald-400 rounded-lg">
+            <div className="p-2 bg-blue-500/20 text-blue-400 rounded-lg">
               <FileText className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-white">Confidential Deal Document Vault</h3>
+              <h3 className="text-base font-bold text-white">Deal Document Vault</h3>
               <p className="text-xs text-slate-300">Audited Tax Returns, Asset Registers & Pitch Decks</p>
             </div>
           </div>
@@ -118,7 +118,7 @@ export function DocumentVaultModal({
               </div>
 
               {/* Watermarked Document Container */}
-              <div className="relative border-2 border-slate-200 rounded-[2px] p-8 bg-slate-50 min-h-[340px] flex flex-col justify-between overflow-hidden shadow-inner">
+              <div className="relative border border-slate-200 rounded-xl p-8 bg-slate-50 min-h-[340px] flex flex-col justify-between overflow-hidden shadow-inner">
                 {/* Dynamic Forensic Watermark Overlay */}
                 <div className="absolute inset-0 pointer-events-none select-none flex items-center justify-center transform -rotate-12 opacity-15 text-center text-xs font-mono font-bold text-slate-900 leading-loose">
                   {activeNDA?.watermarkText || `CONFIDENTIAL — ${currentUser.fullName} — IP: 49.207.182.41`}
@@ -174,7 +174,7 @@ export function DocumentVaultModal({
                 The seller has deposited the following verified transaction exhibits into the VyapaarSetu Data Vault:
               </p>
 
-              <div className="divide-y divide-slate-100 border border-slate-200 rounded-[2px] overflow-hidden bg-white shadow-xs">
+              <div className="divide-y divide-slate-100 border border-slate-200 rounded-xl overflow-hidden bg-white shadow-xs">
                 {documents.map((doc) => (
                   <div
                     key={doc.id}
@@ -226,8 +226,8 @@ export function DocumentVaultModal({
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-3 bg-[#fbfbf9] border-t border-[#e2dfd6] flex items-center justify-between text-[11px] text-slate-500 font-mono">
-          <span>All views, IP addresses and document accesses are immutably logged for audit.</span>
+        <div className="px-6 py-3.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
+          <span>All views and document accesses are logged for audit compliance.</span>
           <button
             onClick={onClose}
             className="btn-secondary btn-sm"
